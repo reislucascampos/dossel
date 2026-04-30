@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Impacto — Dossel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#043D30;--forest-deep:#032821;--moss:#1D9E75;--moss-soft:#2FB488;
+    --paper:#F4EFE6;--paper-warm:#EAE3D4;--ink:#0A1F1A;--ink-soft:#27443C;
+    --hair:rgba(4,61,48,.12);--hair-light:rgba(244,239,230,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400;letter-spacing:-0.015em;line-height:1.02}
+  .italic{font-style:italic}
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+  .container{max-width:1280px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.container{padding:0 24px}}
+
+  /* NAV */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(4,61,48,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(244,239,230,.08)}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;color:var(--paper)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"DM Serif Display",serif;font-size:26px;letter-spacing:-0.01em}
+  .nav-links{display:flex;gap:38px;font-size:14px;font-weight:400;color:rgba(244,239,230,.85)}
+  .nav-links a:hover{color:var(--paper)}
+  .nav-links a.active{color:var(--moss-soft)}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:1px solid rgba(244,239,230,.3);border-radius:999px;font-size:13.5px;font-weight:500;transition:all .2s}
+  .nav-cta:hover{background:var(--paper);color:var(--forest)}
+  @media(max-width:900px){.nav-links{display:none}}
+
+  /* HERO */
+  .page-hero{background:var(--forest);color:var(--paper);padding:160px 0 100px;position:relative;overflow:hidden}
+  .page-hero::before{content:"";position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,.15) 0%,transparent 70%);pointer-events:none}
+  .page-hero .eyebrow{color:var(--moss-soft);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+  .page-hero .eyebrow::before{content:"";width:28px;height:1px;background:var(--moss)}
+  .page-hero h1{font-family:"DM Serif Display",serif;font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-0.02em;max-width:18ch;margin-bottom:24px}
+  .page-hero h1 em{font-style:italic;color:var(--moss-soft)}
+  .page-hero p{font-size:18px;color:rgba(244,239,230,.75);max-width:50ch;line-height:1.6}
+
+  /* STATS BAND */
+  .stats-band{background:var(--forest-deep);color:var(--paper);padding:64px 0}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(244,239,230,.08);border-radius:4px;overflow:hidden}
+  @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat-box{padding:40px 36px;border-right:1px solid rgba(244,239,230,.08)}
+  .stat-box:last-child{border-right:none}
+  .stat-box .num{font-family:"DM Serif Display",serif;font-size:clamp(36px,4vw,56px);color:var(--moss-soft);line-height:1;margin-bottom:8px}
+  .stat-box .lbl{font-size:13px;color:rgba(244,239,230,.6);line-height:1.4}
+  .stat-box .src{font-size:11px;color:rgba(244,239,230,.3);margin-top:8px}
+
+  /* SECTIONS */
+  section{padding:120px 0}
+  .section-head{display:grid;grid-template-columns:1fr 2fr;gap:80px;margin-bottom:80px;align-items:start}
+  .section-head .eyebrow{color:var(--moss);display:flex;align-items:center;gap:10px}
+  .section-head .eyebrow::before{content:"";width:28px;height:1px;background:var(--moss)}
+  .section-head h2{font-family:"DM Serif Display",serif;font-size:clamp(32px,4vw,52px);max-width:20ch;line-height:1.05;margin-bottom:16px}
+  .section-head p{color:var(--ink-soft);font-size:16px;line-height:1.65;max-width:48ch}
+  @media(max-width:860px){.section-head{grid-template-columns:1fr;gap:24px}}
+
+  /* BIOMES */
+  .biomes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  @media(max-width:768px){.biomes-grid{grid-template-columns:1fr 1fr}}
+  .biome-card{background:#fff;padding:40px 36px;position:relative;overflow:hidden;transition:transform .2s}
+  .biome-card:hover{transform:translateY(-2px)}
+  .biome-card .accent{position:absolute;top:0;left:0;right:0;height:3px}
+  .biome-card .icon{font-size:36px;margin-bottom:20px}
+  .biome-card h3{font-family:"DM Serif Display",serif;font-size:22px;margin-bottom:8px}
+  .biome-card .area{font-size:13px;color:var(--ink-soft);margin-bottom:16px}
+  .biome-card .taxa{font-family:"DM Serif Display",serif;font-size:32px;color:var(--forest);line-height:1}
+  .biome-card .taxa small{font-family:"DM Sans",sans-serif;font-size:13px;color:var(--ink-soft);font-weight:400;margin-left:4px}
+  .biome-card p{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-top:12px}
+
+  /* ODS */
+  .ods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:768px){.ods-grid{grid-template-columns:1fr}}
+  .ods-card{background:#fff;border-radius:4px;padding:36px;border-left:4px solid var(--moss)}
+  .ods-card .num{font-family:"DM Serif Display",serif;font-size:48px;color:var(--moss);line-height:1;margin-bottom:12px}
+  .ods-card h3{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--forest)}
+  .ods-card p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+
+  /* MECANISMO */
+  .mecanismo{background:var(--forest);color:var(--paper);padding:120px 0}
+  .mec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:64px}
+  @media(max-width:768px){.mec-grid{grid-template-columns:1fr}}
+  .mec-item{background:rgba(244,239,230,.04);padding:48px 44px}
+  .mec-item .n{font-family:"DM Serif Display",serif;font-size:72px;color:rgba(244,239,230,.08);line-height:1;margin-bottom:-20px}
+  .mec-item h3{font-family:"DM Serif Display",serif;font-size:22px;color:var(--paper);margin-bottom:12px}
+  .mec-item p{font-size:15px;color:rgba(244,239,230,.65);line-height:1.65}
+
+  /* CTA */
+  .cta-band{padding:120px 0;text-align:center}
+  .cta-band h2{font-family:"DM Serif Display",serif;font-size:clamp(36px,4vw,56px);max-width:20ch;margin:0 auto 24px;line-height:1.05}
+  .cta-band p{font-size:17px;color:var(--ink-soft);max-width:42ch;margin:0 auto 40px;line-height:1.6}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--forest);color:var(--paper);padding:18px 32px;border-radius:999px;font-size:15px;font-weight:500;transition:all .2s}
+  .btn-primary:hover{background:var(--forest-deep);transform:translateY(-1px)}
+
+  /* FOOTER */
+  footer{background:var(--forest-deep);color:var(--paper);padding:80px 0 0}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+  @media(max-width:860px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+  .foot-brand{font-family:"DM Serif Display",serif;font-size:28px;margin-bottom:16px}
+  .foot-tagline{font-size:14px;color:rgba(244,239,230,.5);line-height:1.6;max-width:28ch}
+  .foot-col h4{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,239,230,.4);margin-bottom:20px;font-weight:500}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .foot-col ul a{font-size:14px;color:rgba(244,239,230,.65);transition:color .2s}
+  .foot-col ul a:hover{color:var(--paper)}
+  .foot-bar{border-top:1px solid rgba(244,239,230,.08);padding:24px 0;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:rgba(244,239,230,.35)}
+  .socials{display:flex;gap:24px}
+  .socials a{color:rgba(244,239,230,.35);font-size:12.5px;transition:color .2s}
+  .socials a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="container">
+    <div class="row">
+      <a href="index.html" class="brand">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="rgba(244,239,230,0.4)" stroke-width="1"/><path d="M14 22V10M10 14l4-4 4 4" stroke="#2FB488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Dossel
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#calculadora">Calculadora</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="impacto.html" class="active">Impacto</a>
+        <a href="para-empresas.html">Para empresas</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+      <a href="https://wa.me/5588982261897" class="nav-cta">Entrar →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Impacto socioambiental</div>
+    <h1 class="serif">Floresta em pé.<br><em>Renda real.</em></h1>
+    <p>A Dossel não trata o impacto ambiental como efeito colateral. É o produto. Cada crédito emitido representa carbono que permanece fora da atmosfera porque um produtor rural recebeu incentivo econômico para preservar sua floresta.</p>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="num">8,2M</div>
+        <div class="lbl">Imóveis rurais no CAR — menos de 7% analisados para carbono</div>
+        <div class="src">SICAR, 2024</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">37,5%</div>
+        <div class="lbl">Da demanda global de créditos voluntários que o Brasil pode suprir</div>
+        <div class="src">ICC Brasil, 2023</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">R$50Bi</div>
+        <div class="lbl">Potencial estimado do mercado de carbono florestal no Brasil</div>
+        <div class="src">BloombergNEF, 2024</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">2026</div>
+        <div class="lbl">Início do mercado regulado brasileiro — SBCE operacional</div>
+        <div class="src">Lei 15.042/2024</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BIOMAS -->
+<section style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Cobertura por bioma</div>
+      <div>
+        <h2 class="serif">Todos os biomas brasileiros. Um único modelo.</h2>
+        <p>A plataforma Dossel opera nos seis biomas nacionais com taxas de sequestro calibradas pelo IPCC AR6 e dados do MapBiomas.</p>
+      </div>
+    </div>
+    <div class="biomes-grid">
+      <div class="biome-card">
+        <div class="accent" style="background:#1D9E75"></div>
+        <div class="icon">🌵</div>
+        <h3 class="serif">Caatinga</h3>
+        <div class="area">844 mil km² · Foco inicial</div>
+        <div class="taxa">2,8 <small>tCO₂e/ha·ano</small></div>
+        <p>Bioma exclusivamente brasileiro e o mais negligenciado do mercado de carbono. Zero concorrência direta.</p>
+      </div>
+      <div class="biome-card">
+        <div class="accent" style="background:#2FB488"></div>
+        <div class="icon">🌳</div>
+        <h3 class="serif">Amazônia</h3>
+        <div class="area">5,5 milhões km² · Fase 3</div>
+        <div class="taxa">6,8 <small>tCO₂e/ha·ano</small></div>
+        <p>Maior estoque de carbono florestal do mundo. Alta demanda de compradores internacionais por créditos REDD+.</p>
+      </div>
+      <div class="biome-card">
+        <div class="accent" style="background:#0F6E56"></div>
+        <div class="icon">🌾</div>
+        <h3 class="serif">Cerrado</h3>
+        <div class="area">2,04 milhões km² · Fase 2</div>
+        <div class="taxa">4,1 <small>tCO₂e/ha·ano</small></div>
+        <p>Savana mais biodiversa do mundo. Segundo bioma mais desmatado do Brasil — alto potencial de adicionalidade.</p>
+      </div>
+      <div class="biome-card">
+        <div class="accent" style="background:#1D9E75"></div>
+        <div class="icon">🌲</div>
+        <h3 class="serif">Mata Atlântica</h3>
+        <div class="area">1,1 milhões km² · Fase 3</div>
+        <div class="taxa">5,6 <small>tCO₂e/ha·ano</small></div>
+        <p>Apenas 12% da cobertura original resta. Projetos de restauração geram créditos ARR de alto valor.</p>
+      </div>
+      <div class="biome-card">
+        <div class="accent" style="background:#2FB488"></div>
+        <div class="icon">🦜</div>
+        <h3 class="serif">Pantanal</h3>
+        <div class="area">150 mil km² · Fase 3</div>
+        <div class="taxa">3,4 <small>tCO₂e/ha·ano</small></div>
+        <p>Maior área úmida continental do mundo. Créditos com co-benefícios de biodiversidade e recursos hídricos.</p>
+      </div>
+      <div class="biome-card">
+        <div class="accent" style="background:#0F6E56"></div>
+        <div class="icon">🌿</div>
+        <h3 class="serif">Pampa</h3>
+        <div class="area">177 mil km² · Fase 3</div>
+        <div class="taxa">3,1 <small>tCO₂e/ha·ano</small></div>
+        <p>Campos sulinos com alta diversidade de gramíneas nativas. Potencial crescente para projetos de restauração.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MECANISMO DE IMPACTO -->
+<section class="mecanismo">
+  <div class="container">
+    <div class="section-head" style="color:var(--paper)">
+      <div class="eyebrow" style="color:var(--moss-soft)">Como o impacto funciona</div>
+      <div>
+        <h2 class="serif" style="color:var(--paper)">O incentivo econômico e o impacto ambiental estão estruturalmente alinhados.</h2>
+        <p style="color:rgba(244,239,230,.65)">A Dossel só gera receita enquanto a floresta estiver de pé. Isso cria um vínculo permanente entre o sucesso do negócio e a conservação florestal.</p>
+      </div>
+    </div>
+    <div class="mec-grid">
+      <div class="mec-item">
+        <div class="n">01</div>
+        <h3 class="serif">Monitoramento por satélite</h3>
+        <p>Cada propriedade é monitorada continuamente via INPE/PRODES e MapBiomas. Qualquer supressão de vegetação é detectada em tempo real — e suspende imediatamente a emissão de créditos.</p>
+      </div>
+      <div class="mec-item">
+        <div class="n">02</div>
+        <h3 class="serif">Certificação Verra VCS</h3>
+        <p>Todos os créditos são certificados pelo Verified Carbon Standard da Verra — o padrão internacional exigido por Microsoft, Petrobras e grandes bancos para relatórios ESG.</p>
+      </div>
+      <div class="mec-item">
+        <div class="n">03</div>
+        <h3 class="serif">Renda recorrente ao produtor</h3>
+        <p>O produtor recebe 85% da receita dos créditos anualmente. Isso cria um incentivo financeiro duradouro para manter e ampliar a vegetação nativa da propriedade.</p>
+      </div>
+      <div class="mec-item">
+        <div class="n">04</div>
+        <h3 class="serif">Dados públicos, auditoria independente</h3>
+        <p>Nenhum número parte do produtor. Tudo é verificado por satélite com dados do governo federal e confirmado por auditor credenciado pela ONU — eliminando autodeclaração.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ODS -->
+<section style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">ODS — Objetivos de Desenvolvimento Sustentável</div>
+      <div>
+        <h2 class="serif">Impacto alinhado à agenda global.</h2>
+        <p>A Dossel atua diretamente em três dos 17 Objetivos de Desenvolvimento Sustentável da ONU.</p>
+      </div>
+    </div>
+    <div class="ods-grid">
+      <div class="ods-card">
+        <div class="num">13</div>
+        <h3>Ação contra a mudança global do clima</h3>
+        <p>Cada crédito emitido pela Dossel representa uma tonelada de CO₂ que permanece fora da atmosfera. O impacto climático é o produto — não o efeito colateral.</p>
+      </div>
+      <div class="ods-card">
+        <div class="num">15</div>
+        <h3>Vida terrestre</h3>
+        <p>A plataforma remunera diretamente a preservação de florestas nativas e o reflorestamento de áreas degradadas em todos os seis biomas brasileiros.</p>
+      </div>
+      <div class="ods-card">
+        <div class="num">08</div>
+        <h3>Trabalho decente e crescimento econômico</h3>
+        <p>Nova fonte de renda recorrente para produtores rurais — especialmente pequenos e médios — sem exigir mudança de atividade ou custo inicial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <h2 class="serif">Sua propriedade pode<br>fazer parte dessa mudança.</h2>
+    <p>Calcule agora o potencial de carbono da sua terra e receba um relatório gratuito em 48 horas.</p>
+    <a href="index.html#calculadora" class="btn-primary">Calcular meu potencial →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand serif">Dossel</div>
+        <div class="foot-tagline">A plataforma mais simples do Brasil para o produtor rural entrar no mercado de carbono.</div>
+      </div>
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="index.html#calculadora">Calculadora</a></li>
+          <li><a href="como-funciona.html">Como funciona</a></li>
+          <li><a href="impacto.html">Impacto</a></li>
+          <li><a href="para-empresas.html">Para empresas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Imprensa</a></li>
+          <li><a href="#">Carreiras</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@dossel.com.br">contato@dossel.com.br</a></li>
+          <li><a href="https://wa.me/5588982261897">WhatsApp do produtor</a></li>
+          <li><a href="para-empresas.html">Para empresas</a></li>
+          <li><a href="#">Nordeste · Brasil</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <div>© 2026 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00</div>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">YouTube</a>
+        <a href="#">Privacidade</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

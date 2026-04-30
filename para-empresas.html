@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Para Empresas — Dossel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#043D30;--forest-deep:#032821;--moss:#1D9E75;--moss-soft:#2FB488;
+    --paper:#F4EFE6;--paper-warm:#EAE3D4;--ink:#0A1F1A;--ink-soft:#27443C;
+    --hair:rgba(4,61,48,.12);--hair-light:rgba(244,239,230,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400;letter-spacing:-0.015em;line-height:1.02}
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+  .container{max-width:1280px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.container{padding:0 24px}}
+
+  /* NAV */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(4,61,48,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(244,239,230,.08)}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;color:var(--paper)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"DM Serif Display",serif;font-size:26px;letter-spacing:-0.01em}
+  .nav-links{display:flex;gap:38px;font-size:14px;font-weight:400;color:rgba(244,239,230,.85)}
+  .nav-links a:hover{color:var(--paper)}
+  .nav-links a.active{color:var(--moss-soft)}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:1px solid rgba(244,239,230,.3);border-radius:999px;font-size:13.5px;font-weight:500;transition:all .2s}
+  .nav-cta:hover{background:var(--paper);color:var(--forest)}
+  @media(max-width:900px){.nav-links{display:none}}
+
+  /* HERO */
+  .page-hero{background:var(--forest);color:var(--paper);padding:160px 0 100px;position:relative;overflow:hidden}
+  .page-hero::before{content:"";position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,.15) 0%,transparent 70%);pointer-events:none}
+  .page-hero .eyebrow{color:var(--moss-soft);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+  .page-hero .eyebrow::before{content:"";width:28px;height:1px;background:var(--moss)}
+  .page-hero h1{font-family:"DM Serif Display",serif;font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-0.02em;max-width:18ch;margin-bottom:24px}
+  .page-hero h1 em{font-style:italic;color:var(--moss-soft)}
+  .page-hero p{font-size:18px;color:rgba(244,239,230,.75);max-width:50ch;line-height:1.6;margin-bottom:40px}
+  .btn-hero{display:inline-flex;align-items:center;gap:10px;background:var(--paper);color:var(--forest);padding:18px 32px;border-radius:999px;font-size:15px;font-weight:500;transition:all .2s}
+  .btn-hero:hover{background:#fff;transform:translateY(-1px)}
+
+  /* SETORES */
+  section{padding:120px 0}
+  .section-head{display:grid;grid-template-columns:1fr 2fr;gap:80px;margin-bottom:80px;align-items:start}
+  .section-head .eyebrow{color:var(--moss);display:flex;align-items:center;gap:10px}
+  .section-head .eyebrow::before{content:"";width:28px;height:1px;background:var(--moss)}
+  .section-head h2{font-family:"DM Serif Display",serif;font-size:clamp(32px,4vw,52px);max-width:20ch;line-height:1.05;margin-bottom:16px}
+  .section-head p{color:var(--ink-soft);font-size:16px;line-height:1.65;max-width:48ch}
+  @media(max-width:860px){.section-head{grid-template-columns:1fr;gap:24px}}
+
+  .setores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  @media(max-width:768px){.setores-grid{grid-template-columns:1fr 1fr}}
+  .setor-card{background:#fff;padding:40px 36px;transition:transform .2s;position:relative;overflow:hidden}
+  .setor-card:hover{transform:translateY(-2px)}
+  .setor-card .accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--moss)}
+  .setor-card .icon{font-size:32px;margin-bottom:20px}
+  .setor-card h3{font-family:"DM Serif Display",serif;font-size:20px;margin-bottom:10px}
+  .setor-card p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+
+  /* COMO FUNCIONA PARA EMPRESAS */
+  .dark-section{background:var(--forest-deep);color:var(--paper);padding:120px 0}
+  .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:64px}
+  @media(max-width:768px){.steps-grid{grid-template-columns:1fr 1fr}}
+  .step-box{background:rgba(244,239,230,.04);padding:40px 32px}
+  .step-box .n{font-family:"DM Serif Display",serif;font-size:56px;color:var(--moss);line-height:1;margin-bottom:16px;opacity:.6}
+  .step-box h3{font-family:"DM Serif Display",serif;font-size:18px;color:var(--paper);margin-bottom:10px}
+  .step-box p{font-size:14px;color:rgba(244,239,230,.6);line-height:1.65}
+
+  /* VANTAGENS */
+  .vantagens-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+  @media(max-width:768px){.vantagens-grid{grid-template-columns:1fr}}
+  .vantagem{background:#fff;padding:48px 44px;display:flex;gap:24px;align-items:flex-start}
+  .vantagem .check{width:36px;height:36px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .vantagem h3{font-size:17px;font-weight:600;margin-bottom:8px;color:var(--forest)}
+  .vantagem p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+
+  /* COMPARATIVO */
+  .comp-wrap{background:var(--paper-warm);padding:120px 0}
+  .comp-table{width:100%;border-collapse:collapse;background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 1px 0 var(--hair),0 20px 40px -20px rgba(4,61,48,.1)}
+  .comp-table th{padding:20px 28px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:500;text-align:left}
+  .comp-table th:first-child{background:var(--paper-warm);color:var(--ink-soft)}
+  .comp-table th:nth-child(2){background:var(--forest);color:var(--paper)}
+  .comp-table th:nth-child(3){background:#f0f0ee;color:var(--ink-soft)}
+  .comp-table td{padding:18px 28px;font-size:14px;border-top:1px solid var(--hair)}
+  .comp-table td:first-child{font-weight:500;color:var(--ink-soft)}
+  .comp-table td:nth-child(2){background:rgba(4,61,48,.02);color:var(--forest);font-weight:500}
+  .comp-table td:nth-child(3){color:#888}
+  .yes{color:var(--moss)!important;font-weight:600!important}
+  .no{color:#bbb!important;font-weight:400!important}
+
+  /* FORM CONTATO */
+  .contact-section{background:var(--forest);color:var(--paper);padding:120px 0}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  @media(max-width:860px){.contact-grid{grid-template-columns:1fr}}
+  .contact-form{background:rgba(244,239,230,.06);border-radius:4px;padding:48px}
+  .form-field{margin-bottom:20px}
+  .form-field label{display:block;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,239,230,.5);margin-bottom:8px}
+  .form-field input,.form-field select,.form-field textarea{width:100%;padding:14px 16px;background:rgba(244,239,230,.08);border:1px solid rgba(244,239,230,.15);border-radius:4px;font-size:14px;color:var(--paper);font-family:"DM Sans",sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none}
+  .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(244,239,230,.3)}
+  .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--moss)}
+  .form-field select option{background:var(--forest);color:var(--paper)}
+  .form-field textarea{resize:vertical;min-height:100px}
+  .btn-form{width:100%;padding:16px;background:var(--moss);color:#fff;border:none;border-radius:999px;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif;margin-top:8px}
+  .btn-form:hover{background:var(--moss-soft);transform:translateY(-1px)}
+
+  /* FOOTER */
+  footer{background:var(--forest-deep);color:var(--paper);padding:80px 0 0}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+  @media(max-width:860px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+  .foot-brand{font-family:"DM Serif Display",serif;font-size:28px;margin-bottom:16px}
+  .foot-tagline{font-size:14px;color:rgba(244,239,230,.5);line-height:1.6;max-width:28ch}
+  .foot-col h4{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,239,230,.4);margin-bottom:20px;font-weight:500}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .foot-col ul a{font-size:14px;color:rgba(244,239,230,.65);transition:color .2s}
+  .foot-col ul a:hover{color:var(--paper)}
+  .foot-bar{border-top:1px solid rgba(244,239,230,.08);padding:24px 0;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:rgba(244,239,230,.35)}
+  .socials{display:flex;gap:24px}
+  .socials a{color:rgba(244,239,230,.35);font-size:12.5px;transition:color .2s}
+  .socials a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="container">
+    <div class="row">
+      <a href="index.html" class="brand">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="rgba(244,239,230,0.4)" stroke-width="1"/><path d="M14 22V10M10 14l4-4 4 4" stroke="#2FB488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Dossel
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#calculadora">Calculadora</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="impacto.html">Impacto</a>
+        <a href="para-empresas.html" class="active">Para empresas</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+      <a href="#contato" class="nav-cta">Falar com especialista →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Para empresas</div>
+    <h1 class="serif">Créditos de carbono<br><em>verificados.</em><br>Da floresta brasileira.</h1>
+    <p>Ajudamos empresas com metas ESG a compensar emissões com créditos Verra VCS de origem rastreável — direto do produtor rural brasileiro, sem intermediários.</p>
+    <a href="#contato" class="btn-hero">Falar com nossa equipe →</a>
+  </div>
+</section>
+
+<!-- SETORES -->
+<section style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Quem busca a Dossel</div>
+      <div>
+        <h2 class="serif">Sua empresa tem metas de descarbonização. A gente tem os créditos.</h2>
+        <p>Trabalhamos com empresas de qualquer setor que precisam compensar emissões residuais ou antecipar obrigações do mercado regulado brasileiro (SBCE, 2026).</p>
+      </div>
+    </div>
+    <div class="setores-grid">
+      <div class="setor-card">
+        <div class="accent"></div>
+        <div class="icon">🏦</div>
+        <h3 class="serif">Bancos e financeiras</h3>
+        <p>Instituições com carteiras de crédito rural e metas de financiamento sustentável. Créditos Dossel comprovam addicionality local e fortalecem relatórios GRI e TCFD.</p>
+      </div>
+      <div class="setor-card">
+        <div class="accent"></div>
+        <div class="icon">⚡</div>
+        <h3 class="serif">Energia e utilities</h3>
+        <p>Distribuidoras e geradoras com metas de neutralidade. Créditos florestais brasileiros compensam emissões de escopo 1, 2 e 3 com rastreabilidade completa.</p>
+      </div>
+      <div class="setor-card">
+        <div class="accent"></div>
+        <div class="icon">🌾</div>
+        <h3 class="serif">Agronegócio exportador</h3>
+        <p>Exportadores de grãos, proteínas e commodities que precisam comprovar sustentabilidade para mercados europeus e norte-americanos cada vez mais exigentes.</p>
+      </div>
+      <div class="setor-card">
+        <div class="accent"></div>
+        <div class="icon">🏭</div>
+        <h3 class="serif">Indústria e manufatura</h3>
+        <p>Empresas industriais com emissões de processo difíceis de eliminar no curto prazo. Créditos Verra são aceitos pelos principais protocolos de neutralidade.</p>
+      </div>
+      <div class="setor-card">
+        <div class="accent"></div>
+        <div class="icon">🛒</div>
+        <h3 class="serif">Varejo e bens de consumo</h3>
+        <p>Redes com compromissos públicos de neutralidade e pressão de consumidores por transparência. Créditos com QR code rastreável até a propriedade de origem.</p>
+      </div>
+      <div class="setor-card">
+        <div class="accent"></div>
+        <div class="icon">✈️</div>
+        <h3 class="serif">Aviação e logística</h3>
+        <p>Transportadoras e companhias aéreas com obrigações CORSIA e metas SBTi. Créditos florestais brasileiros com co-benefícios de biodiversidade e comunidades.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA PARA EMPRESAS -->
+<section class="dark-section">
+  <div class="container">
+    <div class="section-head" style="color:var(--paper)">
+      <div class="eyebrow" style="color:var(--moss-soft)">O processo</div>
+      <div>
+        <h2 class="serif" style="color:var(--paper)">Do contato ao crédito em conta.</h2>
+        <p style="color:rgba(244,239,230,.65)">Simplificamos todo o processo de compra de créditos de carbono — da due diligence à emissão do certificado.</p>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-box">
+        <div class="n">01</div>
+        <h3 class="serif">Diagnóstico de necessidade</h3>
+        <p>Nossa equipe mapeia as emissões da sua empresa e define o volume e tipo de crédito ideal — REDD+ para conservação ou ARR para reflorestamento.</p>
+      </div>
+      <div class="step-box">
+        <div class="n">02</div>
+        <h3 class="serif">Seleção de projetos</h3>
+        <p>Apresentamos projetos disponíveis no portfólio Dossel com localização, bioma, produtor e histórico de monitoramento. Você escolhe os que melhor se encaixam na sua estratégia ESG.</p>
+      </div>
+      <div class="step-box">
+        <div class="n">03</div>
+        <h3 class="serif">Due diligence e contrato</h3>
+        <p>Fornecemos toda a documentação Verra para auditoria interna: metodologia, laudos de campo, dados de satélite e certificados de emissão. Contrato direto, sem intermediários.</p>
+      </div>
+      <div class="step-box">
+        <div class="n">04</div>
+        <h3 class="serif">Certificado e relatório</h3>
+        <p>Você recebe o certificado Verra com número de série rastreável, relatório de impacto para ESG e suporte para inclusão nos principais frameworks: GRI, CDP, TCFD e SBTi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VANTAGENS -->
+<section style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Por que Dossel</div>
+      <div>
+        <h2 class="serif">Créditos que passam em qualquer auditoria.</h2>
+        <p>Nossos créditos seguem os padrões mais rigorosos do mercado internacional — e vêm com rastreabilidade total da origem.</p>
+      </div>
+    </div>
+    <div class="vantagens-grid">
+      <div class="vantagem">
+        <div class="check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Certificação Verra VCS — padrão internacional</h3>
+          <p>O único padrão aceito por Microsoft, Petrobras e empresas S&P 500 para relatórios ESG. Nenhum token próprio, nenhum padrão regional — só Verra.</p>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Rastreabilidade até a propriedade</h3>
+          <p>Cada crédito é vinculado a uma propriedade rural específica, com CAR, coordenadas geográficas e histórico de monitoramento por satélite acessível ao comprador.</p>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Origem 100% nacional</h3>
+          <p>Créditos da floresta brasileira — Caatinga, Cerrado, Amazônia. Para empresas que precisam comprovar impacto local e conexão com comunidades rurais brasileiras.</p>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Preço competitivo sem intermediários</h3>
+          <p>Comprando direto da plataforma Dossel, você elimina corretoras e intermediários que encarecem o ativo em até 40%. Negociação direta, contrato transparente.</p>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Co-benefícios de biodiversidade</h3>
+          <p>Projetos na Caatinga e Amazônia geram co-benefícios certificados de biodiversidade (CCB), recursos hídricos e inclusão de comunidades rurais — valorizados por frameworks como GRI.</p>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Posicionamento para o SBCE 2026</h3>
+          <p>Com o mercado regulado brasileiro operando em 2026, empresas que já têm projetos Verra ativos estarão melhor posicionadas para cumprir obrigações compulsórias.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section class="comp-wrap">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Comparativo</div>
+      <div>
+        <h2 class="serif">Dossel vs. outras opções do mercado.</h2>
+        <p>Veja por que empresas escolhem a Dossel em vez de corretoras tradicionais ou plataformas com tokens próprios.</p>
+      </div>
+    </div>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Critério</th>
+          <th>Dossel</th>
+          <th>Mercado tradicional</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Certificação</td><td class="yes">Verra VCS ✓</td><td class="no">Token próprio ou padrão regional</td></tr>
+        <tr><td>Rastreabilidade</td><td class="yes">Até a propriedade rural ✓</td><td class="no">Portfólio agregado sem detalhe</td></tr>
+        <tr><td>Origem dos créditos</td><td class="yes">100% Brasil — floresta nativa ✓</td><td class="no">Mix internacional, origem difusa</td></tr>
+        <tr><td>Intermediários</td><td class="yes">Zero — compra direto ✓</td><td class="no">1 a 3 intermediários</td></tr>
+        <tr><td>Due diligence</td><td class="yes">Documentação Verra completa ✓</td><td class="no">Limitada ou paga à parte</td></tr>
+        <tr><td>Co-benefícios</td><td class="yes">Biodiversidade + comunidades ✓</td><td class="no">Raramente disponível</td></tr>
+        <tr><td>Suporte ESG</td><td class="yes">GRI, CDP, TCFD, SBTi ✓</td><td class="no">Relatório básico</td></tr>
+        <tr><td>Impacto local Brasil</td><td class="yes">Renda para produtor rural ✓</td><td class="no">Não mensurável</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FORM CONTATO -->
+<section class="contact-section" id="contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow" style="color:var(--moss-soft);margin-bottom:24px;display:flex;align-items:center;gap:10px">
+          <span style="width:28px;height:1px;background:var(--moss);display:inline-block"></span>
+          Fale com nossa equipe
+        </div>
+        <h2 class="serif" style="font-size:clamp(32px,4vw,52px);color:var(--paper);margin-bottom:24px;line-height:1.05">Pronto para compensar suas emissões com a floresta brasileira?</h2>
+        <p style="font-size:17px;color:rgba(244,239,230,.65);line-height:1.65;margin-bottom:48px">Nossa equipe responde em até 24 horas com uma proposta personalizada para o volume e tipo de crédito que sua empresa precisa.</p>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(244,239,230,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(244,239,230,0.6)" stroke-width="1.5"><path d="M3 8l9 6 9-6M3 8v10a1 1 0 001 1h16a1 1 0 001-1V8M3 8a1 1 0 011-1h16a1 1 0 011 1"/></svg>
+            </div>
+            <span style="font-size:15px;color:rgba(244,239,230,.65)">contato@dossel.com.br</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(244,239,230,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(244,239,230,0.6)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.1 8.1 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+            </div>
+            <span style="font-size:15px;color:rgba(244,239,230,.65)">(88) 98226-1897</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-field">
+          <label>Nome completo</label>
+          <input type="text" id="f-nome" placeholder="Maria Santos">
+        </div>
+        <div class="form-field">
+          <label>Empresa</label>
+          <input type="text" id="f-empresa" placeholder="Nome da empresa">
+        </div>
+        <div class="form-field">
+          <label>E-mail corporativo</label>
+          <input type="email" id="f-email" placeholder="maria@empresa.com.br">
+        </div>
+        <div class="form-field">
+          <label>Setor</label>
+          <select id="f-setor">
+            <option value="">Selecione o setor...</option>
+            <option>Bancos e financeiras</option>
+            <option>Energia e utilities</option>
+            <option>Agronegócio</option>
+            <option>Indústria e manufatura</option>
+            <option>Varejo</option>
+            <option>Aviação e logística</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Volume estimado de créditos (tCO₂e/ano)</label>
+          <select id="f-volume">
+            <option value="">Selecione...</option>
+            <option>Até 1.000 tCO₂e</option>
+            <option>1.000 a 10.000 tCO₂e</option>
+            <option>10.000 a 50.000 tCO₂e</option>
+            <option>Acima de 50.000 tCO₂e</option>
+            <option>Ainda não sei</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Mensagem (opcional)</label>
+          <textarea id="f-msg" placeholder="Conte um pouco sobre sua necessidade..."></textarea>
+        </div>
+        <button class="btn-form" onclick="enviarFormEmpresa()">Enviar pelo WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand serif">Dossel</div>
+        <div class="foot-tagline">A plataforma mais simples do Brasil para o produtor rural entrar no mercado de carbono.</div>
+      </div>
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="index.html#calculadora">Calculadora</a></li>
+          <li><a href="como-funciona.html">Como funciona</a></li>
+          <li><a href="impacto.html">Impacto</a></li>
+          <li><a href="para-empresas.html">Para empresas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Imprensa</a></li>
+          <li><a href="#">Carreiras</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@dossel.com.br">contato@dossel.com.br</a></li>
+          <li><a href="https://wa.me/5588982261897">WhatsApp</a></li>
+          <li><a href="para-empresas.html#contato">Para empresas</a></li>
+          <li><a href="#">Nordeste · Brasil</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <div>© 2026 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00</div>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">YouTube</a>
+        <a href="#">Privacidade</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function enviarFormEmpresa() {
+  const nome    = document.getElementById('f-nome').value.trim() || 'Empresa';
+  const empresa = document.getElementById('f-empresa').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const setor   = document.getElementById('f-setor').value;
+  const volume  = document.getElementById('f-volume').value;
+  const msg     = document.getElementById('f-msg').value.trim();
+  const texto = encodeURIComponent(
+    `Olá! Tenho interesse em comprar créditos de carbono pela Dossel.\n\n` +
+    `*Nome:* ${nome}\n*Empresa:* ${empresa}\n*E-mail:* ${email}\n` +
+    `*Setor:* ${setor}\n*Volume estimado:* ${volume}\n` +
+    (msg ? `*Mensagem:* ${msg}\n` : '') +
+    `\nSite Dossel — dossel.com.br/para-empresas`
+  );
+  window.open(`https://wa.me/5588982261897?text=${texto}`, '_blank');
+}
+</script>
+</body>
+</html>

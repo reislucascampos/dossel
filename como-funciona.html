@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Como Funciona — Dossel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#043D30;--forest-deep:#032821;--moss:#1D9E75;--moss-soft:#2FB488;
+    --paper:#F4EFE6;--paper-warm:#EAE3D4;--ink:#0A1F1A;--ink-soft:#27443C;
+    --hair:rgba(4,61,48,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400;letter-spacing:-0.015em;line-height:1.02}
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+  .container{max-width:1280px;margin:0 auto;padding:0 48px}
+  @media(max-width:768px){.container{padding:0 24px}}
+
+  /* NAV */
+  nav.top{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;background:rgba(4,61,48,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(244,239,230,.08)}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;color:var(--paper)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"DM Serif Display",serif;font-size:26px;letter-spacing:-0.01em}
+  .nav-links{display:flex;gap:38px;font-size:14px;color:rgba(244,239,230,.85)}
+  .nav-links a:hover{color:var(--paper)}
+  .nav-links a.active{color:var(--moss-soft)}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:1px solid rgba(244,239,230,.3);border-radius:999px;font-size:13.5px;font-weight:500;transition:all .2s}
+  .nav-cta:hover{background:var(--paper);color:var(--forest)}
+  @media(max-width:900px){.nav-links{display:none}}
+
+  /* HERO */
+  .page-hero{background:var(--forest);color:var(--paper);padding:160px 0 100px;position:relative;overflow:hidden}
+  .page-hero::before{content:"";position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,.15) 0%,transparent 70%);pointer-events:none}
+  .page-hero .eyebrow{color:var(--moss-soft);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+  .page-hero .eyebrow::before{content:"";width:28px;height:1px;background:var(--moss)}
+  .page-hero h1{font-family:"DM Serif Display",serif;font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-0.02em;max-width:18ch;margin-bottom:24px}
+  .page-hero h1 em{font-style:italic;color:var(--moss-soft)}
+  .page-hero p{font-size:18px;color:rgba(244,239,230,.75);max-width:50ch;line-height:1.6}
+
+  /* SEÇÕES */
+  section{padding:120px 0}
+  .section-head{display:grid;grid-template-columns:1fr 2fr;gap:80px;margin-bottom:80px;align-items:start}
+  .section-head .eyebrow{color:var(--moss);display:flex;align-items:center;gap:10px}
+  .section-head .eyebrow::before{content:"";width:28px;height:1px;background:var(--moss)}
+  .section-head h2{font-family:"DM Serif Display",serif;font-size:clamp(32px,4vw,52px);max-width:20ch;line-height:1.05;margin-bottom:16px}
+  .section-head p{color:var(--ink-soft);font-size:16px;line-height:1.65;max-width:48ch}
+  @media(max-width:860px){.section-head{grid-template-columns:1fr;gap:24px}}
+
+  /* TIMELINE PASSOS */
+  .timeline{position:relative;padding-left:40px}
+  .timeline::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--hair)}
+  .tl-item{position:relative;margin-bottom:64px}
+  .tl-item:last-child{margin-bottom:0}
+  .tl-dot{position:absolute;left:-48px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--moss);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--moss)}
+  .tl-num{font-family:"DM Serif Display",serif;font-size:13px;color:var(--moss);margin-bottom:8px;letter-spacing:.1em}
+  .tl-title{font-family:"DM Serif Display",serif;font-size:26px;color:var(--forest);margin-bottom:12px;line-height:1.1}
+  .tl-desc{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:56ch;margin-bottom:16px}
+  .tl-detail{background:#fff;border-radius:4px;padding:20px 24px;border-left:3px solid var(--moss);display:inline-block}
+  .tl-detail p{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+  .tl-detail strong{color:var(--forest)}
+
+  /* DOIS CAMINHOS */
+  .caminhos{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:0}
+  @media(max-width:768px){.caminhos{grid-template-columns:1fr}}
+  .caminho{background:#fff;padding:48px 44px}
+  .caminho .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:24px}
+  .caminho .tag-verde{background:rgba(29,158,117,.1);color:var(--moss)}
+  .caminho .tag-terra{background:rgba(180,100,30,.1);color:#8B4A0E}
+  .caminho h3{font-family:"DM Serif Display",serif;font-size:26px;margin-bottom:12px;color:var(--forest)}
+  .caminho p{font-size:15px;color:var(--ink-soft);line-height:1.65;margin-bottom:24px}
+  .caminho ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .caminho ul li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-soft)}
+  .caminho ul li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--moss);flex-shrink:0;margin-top:6px}
+
+  /* DADOS */
+  .dados-section{background:var(--forest);color:var(--paper);padding:120px 0}
+  .dados-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px}
+  @media(max-width:768px){.dados-grid{grid-template-columns:1fr}}
+  .dado-box{background:rgba(244,239,230,.04);padding:48px 40px}
+  .dado-box .fonte{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--moss-soft);margin-bottom:16px}
+  .dado-box h3{font-family:"DM Serif Display",serif;font-size:20px;color:var(--paper);margin-bottom:12px}
+  .dado-box p{font-size:14px;color:rgba(244,239,230,.6);line-height:1.65}
+
+  /* FAQ */
+  .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--hair)}
+  .faq-item{border-bottom:1px solid var(--hair)}
+  .faq-q{width:100%;text-align:left;padding:24px 0;display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:500;color:var(--forest);cursor:pointer;background:none;border:none;font-family:"DM Sans",sans-serif}
+  .faq-q .icon{width:24px;height:24px;border-radius:50%;border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;color:var(--moss)}
+  .faq-q.open .icon{transform:rotate(45deg)}
+  .faq-a{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:70ch;padding-bottom:24px;display:none}
+  .faq-a.open{display:block}
+
+  /* CTA */
+  .cta-band{padding:120px 0;text-align:center}
+  .cta-band h2{font-family:"DM Serif Display",serif;font-size:clamp(36px,4vw,56px);max-width:20ch;margin:0 auto 24px;line-height:1.05}
+  .cta-band p{font-size:17px;color:var(--ink-soft);max-width:42ch;margin:0 auto 40px;line-height:1.6}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--forest);color:var(--paper);padding:18px 32px;border-radius:999px;font-size:15px;font-weight:500;transition:all .2s}
+  .btn-primary:hover{background:var(--forest-deep);transform:translateY(-1px)}
+
+  /* FOOTER */
+  footer{background:var(--forest-deep);color:var(--paper);padding:80px 0 0}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+  @media(max-width:860px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+  .foot-brand{font-family:"DM Serif Display",serif;font-size:28px;margin-bottom:16px}
+  .foot-tagline{font-size:14px;color:rgba(244,239,230,.5);line-height:1.6;max-width:28ch}
+  .foot-col h4{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,239,230,.4);margin-bottom:20px;font-weight:500}
+  .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .foot-col ul a{font-size:14px;color:rgba(244,239,230,.65);transition:color .2s}
+  .foot-col ul a:hover{color:var(--paper)}
+  .foot-bar{border-top:1px solid rgba(244,239,230,.08);padding:24px 0;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:rgba(244,239,230,.35)}
+  .socials{display:flex;gap:24px}
+  .socials a{color:rgba(244,239,230,.35);font-size:12.5px;transition:color .2s}
+  .socials a:hover{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="container">
+    <div class="row">
+      <a href="index.html" class="brand">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="rgba(244,239,230,0.4)" stroke-width="1"/><path d="M14 22V10M10 14l4-4 4 4" stroke="#2FB488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Dossel
+      </a>
+      <div class="nav-links">
+        <a href="index.html#calculadora">Calculadora</a>
+        <a href="como-funciona.html" class="active">Como funciona</a>
+        <a href="impacto.html">Impacto</a>
+        <a href="para-empresas.html">Para empresas</a>
+        <a href="blog.html">Blog</a>
+        <a href="sobre-nos.html">Sobre nós</a>
+      </div>
+      <a href="https://wa.me/5588982261897" class="nav-cta">Entrar →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Como funciona</div>
+    <h1 class="serif">Simples para<br>o produtor.<br><em>Rigoroso para o mercado.</em></h1>
+    <p>Da calculadora ao crédito Verra na conta — veja cada etapa do processo Dossel para produtores rurais e entenda por que é o mais acessível do Brasil.</p>
+  </div>
+</section>
+
+<!-- JORNADA DO PRODUTOR -->
+<section style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Jornada do produtor</div>
+      <div>
+        <h2 class="serif">Do primeiro acesso à renda na conta.</h2>
+        <p>Seis etapas — as três primeiras você faz em minutos. As três seguintes a Dossel cuida por você.</p>
+      </div>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-num">Etapa 01</div>
+        <div class="tl-title">Calculadora gratuita</div>
+        <p class="tl-desc">Acesse o site, selecione o bioma da sua propriedade, informe a área e o percentual de vegetação nativa preservada. Em segundos você vê o potencial de sequestro de carbono e a receita estimada por ano.</p>
+        <div class="tl-detail"><p><strong>Tempo:</strong> 2 minutos · <strong>Custo:</strong> zero · <strong>Dados necessários:</strong> bioma, área em hectares, % de vegetação nativa</p></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-num">Etapa 02</div>
+        <div class="tl-title">Solicitação do COA</div>
+        <p class="tl-desc">Clique em "Quero meu relatório gratuito", preencha nome, WhatsApp e estado. Nossa equipe recebe sua solicitação e entra em contato em até 24 horas para solicitar o número do CAR da propriedade.</p>
+        <div class="tl-detail"><p><strong>COA</strong> = Carbon Opportunity Assessment — relatório de avaliação de oportunidade de carbono, padrão internacional do mercado.</p></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-num">Etapa 03</div>
+        <div class="tl-title">Recebimento do COA</div>
+        <p class="tl-desc">Com o número do CAR, cruzamos automaticamente os dados da propriedade com INPE, MapBiomas e SICAR. Em até 48 horas você recebe o COA completo — com potencial calibrado, projeção de receita por ano e análise de elegibilidade Verra.</p>
+        <div class="tl-detail"><p><strong>Tempo total:</strong> 48h · <strong>Custo:</strong> zero · <strong>Fontes:</strong> INPE/PRODES, MapBiomas Col. 8, CAR/SICAR, IPCC AR6</p></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-num">Etapa 04</div>
+        <div class="tl-title">Visita de campo e contrato</div>
+        <p class="tl-desc">Se o COA confirmar elegibilidade, agendamos uma visita técnica presencial — custeada pela Dossel. O engenheiro florestal valida a vegetação nativa, coleta dados complementares e assina o laudo de campo. Após a visita, você assina o contrato de parceria.</p>
+        <div class="tl-detail"><p><strong>Sem custo ao produtor.</strong> A Dossel cobre todos os custos técnicos — visita, laudo, registro e auditoria.</p></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-num">Etapa 05</div>
+        <div class="tl-title">Certificação Verra</div>
+        <p class="tl-desc">A Dossel registra o projeto na plataforma Verra (VCS), conduz o processo de validação e verificação por auditora independente credenciada pela ONU, e solicita a emissão dos créditos. Este processo leva entre 12 e 18 meses — e acontece sem nenhuma intervenção do produtor.</p>
+        <div class="tl-detail"><p><strong>Verra VCS</strong> é o padrão internacional exigido por Microsoft, Petrobras e todos os grandes compradores corporativos de créditos de carbono.</p></div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-num">Etapa 06</div>
+        <div class="tl-title">Créditos emitidos e renda na conta</div>
+        <p class="tl-desc">Com os créditos emitidos no registro Verra, a Dossel comercializa para empresas compradoras com metas ESG. A receita é depositada diretamente na conta do produtor — 85% do valor líquido. A partir daí, novos créditos são gerados anualmente, enquanto a floresta estiver monitorada e preservada.</p>
+        <div class="tl-detail"><p><strong>85%</strong> da receita vai ao produtor · <strong>15%</strong> é a comissão da Dossel · Pagamento anual · Monitoramento contínuo por satélite</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DOIS CAMINHOS -->
+<section style="background:var(--paper-warm)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Dois tipos de projeto</div>
+      <div>
+        <h2 class="serif">Tem floresta preservada ou terra para reflorestar?</h2>
+        <p>A Dossel atende os dois casos com metodologias diferentes, ambas certificadas pela Verra.</p>
+      </div>
+    </div>
+    <div class="caminhos">
+      <div class="caminho">
+        <span class="tag tag-verde">Floresta preservada</span>
+        <h3 class="serif">REDD+ — Conservação</h3>
+        <p>Para propriedades com vegetação nativa preservada acima do mínimo legal. Os créditos são gerados pela manutenção da floresta existente — sem precisar plantar nada.</p>
+        <ul>
+          <li>Elegível a partir de 50 hectares de vegetação nativa</li>
+          <li>CAR ativo e sem embargo ambiental</li>
+          <li>Créditos gerados anualmente desde o primeiro ano</li>
+          <li>Sem mudança na atividade produtiva atual</li>
+          <li>Receita estimada: R$ 40–200/ha/ano dependendo do bioma</li>
+        </ul>
+      </div>
+      <div class="caminho">
+        <span class="tag tag-terra">Terra degradada</span>
+        <h3 class="serif">ARR — Reflorestamento</h3>
+        <p>Para propriedades com área degradada ou em processo de recuperação de Reserva Legal. Os créditos crescem com a floresta — quanto maior a floresta, mais créditos.</p>
+        <ul>
+          <li>Elegível a partir de 30 hectares de área recuperável</li>
+          <li>Espécies nativas do bioma para maior adicionalidade</li>
+          <li>Créditos crescem progressivamente por 20–30 anos</li>
+          <li>Pode cumprir obrigação de Reserva Legal gerando renda</li>
+          <li>Receita estimada: R$ 20–80/ha/ano no 5º ano</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DADOS E TECNOLOGIA -->
+<section class="dados-section">
+  <div class="container">
+    <div class="section-head" style="color:var(--paper)">
+      <div class="eyebrow" style="color:var(--moss-soft)">Base de dados</div>
+      <div>
+        <h2 class="serif" style="color:var(--paper)">Dados públicos brasileiros de classe mundial.</h2>
+        <p style="color:rgba(244,239,230,.65)">A Dossel usa as mesmas fontes do governo federal para calcular e monitorar cada projeto — sem autodeclaração, sem conflito de interesse.</p>
+      </div>
+    </div>
+    <div class="dados-grid">
+      <div class="dado-box">
+        <div class="fonte">INPE · PRODES · DETER</div>
+        <h3 class="serif">Monitoramento florestal</h3>
+        <p>Desmatamento anual por corte raso em todos os biomas desde 1988. Alertas em tempo real via DETER. Resolução de 30m. Referência oficial do governo brasileiro.</p>
+      </div>
+      <div class="dado-box">
+        <div class="fonte">MapBiomas · Coleção 8</div>
+        <h3 class="serif">Cobertura e uso da terra</h3>
+        <p>Mapeamento anual de cobertura e uso da terra desde 1985. Carbono orgânico do solo. Vegetação secundária. Resolução de 10m via Sentinel-2.</p>
+      </div>
+      <div class="dado-box">
+        <div class="fonte">SICAR · CAR</div>
+        <h3 class="serif">Cadastro de propriedades</h3>
+        <p>Registro obrigatório de todos os imóveis rurais com perímetro georreferenciado, APP, Reserva Legal e vegetação nativa declarada. Base para elegibilidade Verra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:var(--paper)">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Perguntas frequentes</div>
+      <div>
+        <h2 class="serif">Dúvidas comuns de quem está começando.</h2>
+        <p>Se não encontrar sua resposta aqui, fale com a gente pelo WhatsApp.</p>
+      </div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Preciso pagar alguma coisa para entrar?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">Não. O processo é 100% gratuito para o produtor rural. A Dossel cobre todos os custos de diagnóstico, visita técnica, certificação Verra e auditoria. Nossa remuneração vem de 15% dos créditos emitidos — ou seja, só ganhamos quando você ganha.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Preciso parar de produzir na minha terra?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">Não. O projeto de carbono é feito apenas nas áreas de vegetação nativa — APP, Reserva Legal e outras matas. A área produtiva da sua propriedade continua funcionando normalmente. Você gera renda extra sem mudar nada no que já faz.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Quanto tempo leva para receber o primeiro pagamento?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">O processo de certificação Verra leva entre 12 e 18 meses. Esse prazo é padrão do mercado de carbono e vale para todas as plataformas. Após a emissão dos primeiros créditos, o pagamento é feito anualmente com base nos créditos vendidos naquele período.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          O que é o número do CAR e onde encontro?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">O CAR é o Cadastro Ambiental Rural — um registro obrigatório para todos os imóveis rurais no Brasil. O número de inscrição fica no documento de registro do CAR, que pode ser obtido no site do SICAR (car.gov.br) ou com o técnico agrícola da EMATER do seu município.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Minha propriedade é pequena. Vale a pena?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">Para projetos individuais, a área mínima elegível é 50 hectares de vegetação nativa. Para propriedades menores, estamos desenvolvendo um modelo de agrupamento — onde vários pequenos produtores de uma mesma região formam um projeto coletivo. Cadastre-se e entraremos em contato quando esse modelo estiver disponível.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          O que é a certificação Verra e por que ela importa?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">A Verra é a organização internacional que administra o Verified Carbon Standard (VCS) — o principal padrão do mercado voluntário de carbono. Um crédito Verra é auditado por terceiros, rastreável e aceito por empresas como Microsoft, Petrobras e grandes bancos em seus relatórios ESG. Créditos sem Verra são rejeitados pelos compradores corporativos mais sérios.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Posso sair do contrato se mudar de ideia?
+          <span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a">O contrato de parceria Dossel tem um prazo mínimo vinculado ao período de monitoramento do projeto Verra (geralmente 20 anos), com cláusulas de saída antecipada. Os termos são transparentes e explicados em detalhe antes da assinatura. Nossa equipe esclarece todas as dúvidas antes de qualquer compromisso.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <h2 class="serif">Pronto para descobrir o potencial da sua propriedade?</h2>
+    <p>Use a calculadora gratuita e veja em segundos quanto sua floresta pode gerar.</p>
+    <a href="index.html#calculadora" class="btn-primary">Calcular agora — é grátis →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand serif">Dossel</div>
+        <div class="foot-tagline">A plataforma mais simples do Brasil para o produtor rural entrar no mercado de carbono.</div>
+      </div>
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="index.html#calculadora">Calculadora</a></li>
+          <li><a href="como-funciona.html">Como funciona</a></li>
+          <li><a href="impacto.html">Impacto</a></li>
+          <li><a href="para-empresas.html">Para empresas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Imprensa</a></li>
+          <li><a href="#">Carreiras</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@dossel.com.br">contato@dossel.com.br</a></li>
+          <li><a href="https://wa.me/5588982261897">WhatsApp</a></li>
+          <li><a href="para-empresas.html">Para empresas</a></li>
+          <li><a href="#">Nordeste · Brasil</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <div>© 2026 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00</div>
+      <div class="socials">
+        <a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">Privacidade</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+</script>
+</body>
+</html>
