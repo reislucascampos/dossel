@@ -339,6 +339,14 @@
       .btn-ghost:hover {
         border-bottom-color: var(--paper);
       }
+      @media (max-width: 768px) {
+        .btn-ghost {
+          display: none;
+        }
+        .hero-cta-row {
+          justify-content: center;
+        }
+      }
 
       .hero-meta {
         position: absolute;
@@ -361,6 +369,11 @@
         color: var(--paper);
         font-weight: 500;
         font-size: 13.5px;
+      }
+      @media (max-width: 768px) {
+        .hero-meta {
+          display: none;
+        }
       }
 
       /* ─────────── SECTION CHROME ─────────── */
