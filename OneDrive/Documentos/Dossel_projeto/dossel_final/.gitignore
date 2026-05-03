@@ -1,0 +1,14 @@
+# Variáveis de ambiente — NUNCA subir para o GitHub
+.env
+backend/.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Sistema
+.DS_Store
+Thumbs.db
