@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sobre Nós — Dossel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --forest: #043d30;
+        --forest-deep: #032821;
+        --moss: #1d9e75;
+        --moss-soft: #2fb488;
+        --paper: #f4efe6;
+        --paper-warm: #eae3d4;
+        --ink: #0a1f1a;
+        --ink-soft: #27443c;
+        --hair: rgba(4, 61, 48, 0.12);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "DM Sans", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .serif {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-weight: 400;
+        letter-spacing: -0.015em;
+        line-height: 1.02;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 24px;
+        }
+      }
+
+      /* NAV */
+      nav.top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 20px 0;
+        background: rgba(4, 61, 48, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(244, 239, 230, 0.08);
+      }
+      nav.top .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--paper);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 38px;
+        font-size: 14px;
+        color: rgba(244, 239, 230, 0.85);
+      }
+      .nav-links a:hover {
+        color: var(--paper);
+      }
+      .nav-links a.active {
+        color: var(--moss-soft);
+      }
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 20px;
+        border: 1px solid rgba(244, 239, 230, 0.3);
+        border-radius: 999px;
+        font-size: 13.5px;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .nav-cta:hover {
+        background: var(--paper);
+        color: var(--forest);
+      }
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* HERO */
+      .hero {
+        background: var(--forest);
+        color: var(--paper);
+        padding: 160px 0 120px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -200px;
+        right: -200px;
+        width: 800px;
+        height: 800px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 158, 117, 0.12) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: -100px;
+        left: -100px;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(196, 117, 26, 0.08) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .hero .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--moss-soft);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .hero .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--moss);
+      }
+      .hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(44px, 5vw, 72px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 0;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--moss-soft);
+      }
+      .hero-right p {
+        font-size: 18px;
+        color: rgba(244, 239, 230, 0.65);
+        line-height: 1.75;
+        margin-bottom: 24px;
+      }
+      .hero-right p:last-child {
+        margin-bottom: 0;
+      }
+      .hero-right strong {
+        color: var(--paper);
+      }
+
+      /* ORIGEM */
+      .origem {
+        padding: 120px 0;
+        background: var(--paper);
+      }
+      .origem-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .origem-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .origem .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--moss);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .origem .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--moss);
+      }
+      .origem h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(32px, 4vw, 52px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin-bottom: 32px;
+        color: var(--forest);
+      }
+      .origem h2 em {
+        font-style: italic;
+        color: var(--moss);
+      }
+      .origem-text p {
+        font-size: 17px;
+        color: var(--ink-soft);
+        line-height: 1.75;
+        margin-bottom: 20px;
+      }
+      .origem-text p:last-child {
+        margin-bottom: 0;
+      }
+      .origem-text strong {
+        color: var(--forest);
+        font-weight: 600;
+      }
+      .araripe-box {
+        background: var(--forest);
+        color: var(--paper);
+        border-radius: 4px;
+        padding: 48px;
+        position: relative;
+        overflow: hidden;
+      }
+      .araripe-box::before {
+        content: "";
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 158, 117, 0.2) 0%,
+          transparent 70%
+        );
+      }
+      .araripe-box .label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--moss-soft);
+        margin-bottom: 20px;
+      }
+      .araripe-box h3 {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        color: var(--paper);
+        margin-bottom: 20px;
+        line-height: 1.15;
+      }
+      .araripe-box p {
+        font-size: 15px;
+        color: rgba(244, 239, 230, 0.65);
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+      .araripe-box p:last-child {
+        margin-bottom: 0;
+      }
+      .araripe-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid rgba(244, 239, 230, 0.1);
+      }
+      .astat .num {
+        font-family: "DM Serif Display", serif;
+        font-size: 36px;
+        color: var(--moss-soft);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .astat .lbl {
+        font-size: 12px;
+        color: rgba(244, 239, 230, 0.45);
+        line-height: 1.4;
+      }
+
+      /* MISSÃO E VALORES */
+      .missao {
+        background: var(--paper-warm);
+        padding: 120px 0;
+      }
+      .missao-head {
+        text-align: center;
+        margin-bottom: 80px;
+      }
+      .missao-head .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--moss);
+        margin-bottom: 16px;
+      }
+      .missao-head h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(32px, 4vw, 52px);
+        color: var(--forest);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        max-width: 20ch;
+        margin: 0 auto;
+      }
+      .valores-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+      }
+      @media (max-width: 768px) {
+        .valores-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .valor {
+        background: #fff;
+        padding: 48px 44px;
+      }
+      .valor .icon {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+      .valor h3 {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        color: var(--forest);
+        margin-bottom: 12px;
+      }
+      .valor p {
+        font-size: 15px;
+        color: var(--ink-soft);
+        line-height: 1.65;
+      }
+
+      /* FUNDADOR */
+      .fundador {
+        background: var(--forest);
+        color: var(--paper);
+        padding: 120px 0;
+      }
+      .fundador-inner {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 80px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .fundador-inner {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .fundador .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--moss-soft);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .fundador .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--moss);
+      }
+      .foto-box {
+        background: rgba(244, 239, 230, 0.06);
+        border-radius: 4px;
+        aspect-ratio: 3/4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        border: 1px solid rgba(244, 239, 230, 0.1);
+      }
+      .foto-box .avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(29, 158, 117, 0.2);
+        border: 2px solid rgba(29, 158, 117, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+      }
+      .foto-box p {
+        font-size: 13px;
+        color: rgba(244, 239, 230, 0.3);
+        text-align: center;
+      }
+      .fundador-bio h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(28px, 3vw, 44px);
+        color: var(--paper);
+        margin-bottom: 8px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      .fundador-bio .cargo {
+        font-size: 14px;
+        color: var(--moss-soft);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+      }
+      .fundador-bio p {
+        font-size: 17px;
+        color: rgba(244, 239, 230, 0.65);
+        line-height: 1.75;
+        margin-bottom: 20px;
+      }
+      .fundador-bio p:last-of-type {
+        margin-bottom: 32px;
+      }
+      .fundador-bio strong {
+        color: var(--paper);
+      }
+      .fundador-links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .flink {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border: 1px solid rgba(244, 239, 230, 0.2);
+        border-radius: 999px;
+        font-size: 13px;
+        color: rgba(244, 239, 230, 0.7);
+        transition: all 0.2s;
+      }
+      .flink:hover {
+        border-color: var(--moss);
+        color: var(--paper);
+      }
+
+      /* JUNTAR */
+      .juntar {
+        background: var(--paper);
+        padding: 120px 0;
+      }
+      .juntar-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .juntar-inner {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .juntar .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--moss);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .juntar .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--moss);
+      }
+      .juntar h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(32px, 4vw, 52px);
+        color: var(--forest);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+      }
+      .juntar h2 em {
+        font-style: italic;
+        color: var(--moss);
+      }
+      .juntar p {
+        font-size: 17px;
+        color: var(--ink-soft);
+        line-height: 1.75;
+        margin-bottom: 24px;
+      }
+      .juntar p:last-of-type {
+        margin-bottom: 32px;
+      }
+      .vagas {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .vaga {
+        background: #fff;
+        border-radius: 4px;
+        padding: 28px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: transform 0.2s;
+      }
+      .vaga:hover {
+        transform: translateX(4px);
+      }
+      .vaga-info h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--forest);
+        margin-bottom: 4px;
+      }
+      .vaga-info p {
+        font-size: 13px;
+        color: var(--ink-soft);
+      }
+      .vaga-tag {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(29, 158, 117, 0.1);
+        color: var(--moss);
+        white-space: nowrap;
+      }
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--forest);
+        color: var(--paper);
+        padding: 18px 32px;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .btn-primary:hover {
+        background: var(--forest-deep);
+        transform: translateY(-1px);
+      }
+
+      /* CTA */
+      .cta-band {
+        background: var(--forest-deep);
+        color: var(--paper);
+        padding: 120px 0;
+        text-align: center;
+      }
+      .cta-band h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(36px, 4vw, 56px);
+        max-width: 20ch;
+        margin: 0 auto 24px;
+        line-height: 1.05;
+      }
+      .cta-band h2 em {
+        font-style: italic;
+        color: var(--moss-soft);
+      }
+      .cta-band p {
+        font-size: 17px;
+        color: rgba(244, 239, 230, 0.6);
+        max-width: 42ch;
+        margin: 0 auto 40px;
+        line-height: 1.6;
+      }
+      .btn-light {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--paper);
+        color: var(--forest);
+        padding: 18px 32px;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .btn-light:hover {
+        background: #fff;
+        transform: translateY(-1px);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--forest-deep);
+        color: var(--paper);
+        padding: 80px 0 0;
+        border-top: 1px solid rgba(244, 239, 230, 0.06);
+      }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 60px;
+        margin-bottom: 60px;
+      }
+      @media (max-width: 860px) {
+        .foot-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+      }
+      .foot-brand {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+      .foot-tagline {
+        font-size: 14px;
+        color: rgba(244, 239, 230, 0.5);
+        line-height: 1.6;
+        max-width: 28ch;
+      }
+      .foot-col h4 {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(244, 239, 230, 0.4);
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+      .foot-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .foot-col ul a {
+        font-size: 14px;
+        color: rgba(244, 239, 230, 0.65);
+        transition: color 0.2s;
+      }
+      .foot-col ul a:hover {
+        color: var(--paper);
+      }
+      .foot-bar {
+        border-top: 1px solid rgba(244, 239, 230, 0.08);
+        padding: 24px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12.5px;
+        color: rgba(244, 239, 230, 0.35);
+      }
+      .socials {
+        display: flex;
+        gap: 24px;
+      }
+      .socials a {
+        color: rgba(244, 239, 230, 0.35);
+        font-size: 12.5px;
+        transition: color 0.2s;
+      }
+      .socials a:hover {
+        color: var(--paper);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="top">
+      <div class="container">
+        <div class="row">
+          <a href="index.html" class="brand">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle
+                cx="14"
+                cy="14"
+                r="13"
+                stroke="rgba(244,239,230,0.4)"
+                stroke-width="1"
+              />
+              <path
+                d="M14 22V10M10 14l4-4 4 4"
+                stroke="#2FB488"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Dossel
+          </a>
+          <div class="nav-links" id="nav-links">
+            <button
+              class="nav-close"
+              onclick="fecharMenu()"
+              aria-label="Fechar menu"
+            >
+              ×
+            </button>
+            <a href="index.html#calculadora">Calculadora</a>
+            <a href="como-funciona.html">Como funciona</a>
+            <a href="impacto.html">Impacto</a>
+            <a href="para-empresas.html">Para empresas</a>
+            <a href="blog.html">Blog</a>
+            <a href="sobre-nos.html">Sobre nós</a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px">
+            <a href="https://wa.me/5588982261897" class="nav-cta">Entrar →</a>
+            <button
+              class="nav-hamburger"
+              onclick="abrirMenu()"
+              aria-label="Abrir menu"
+            >
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Sobre nós</div>
+            <h1 class="serif">
+              Nascemos no<br />sertão.<br /><em>Pensamos no<br />mundo.</em>
+            </h1>
+          </div>
+          <div class="hero-right">
+            <p>
+              A Dossel nasceu em <strong>Juazeiro do Norte</strong>, no interior
+              do Ceará — a poucos quilômetros da Chapada do Araripe, uma das
+              florestas mais extraordinárias do Nordeste brasileiro.
+            </p>
+            <p>
+              Crescemos olhando para uma floresta que resiste ao semiárido,
+              abriga espécies únicas no mundo e está sendo destruída em
+              silêncio. E decidimos que ela precisa ter valor econômico para
+              sobreviver.
+            </p>
+            <p>
+              A Dossel é a plataforma que conecta essa floresta ao mercado
+              global de créditos de carbono.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORIGEM -->
+    <section class="origem">
+      <div class="container">
+        <div class="origem-grid">
+          <div>
+            <div class="eyebrow">Nossa origem</div>
+            <h2 class="serif">
+              A Chapada do Araripe nos <em>ensinou</em> tudo.
+            </h2>
+            <div class="origem-text">
+              <p>
+                A <strong>Chapada do Araripe</strong> é um fenômeno geográfico
+                único — uma floresta úmida de cerradão que surge no meio do
+                semiárido, na divisa entre Ceará, Pernambuco e Piauí. São 348
+                fontes naturais de água, 290 espécies de aves catalogadas e uma
+                biodiversidade que não existe em nenhum outro lugar do planeta.
+              </p>
+              <p>
+                É lá que vive o <strong>soldadinho-do-araripe</strong> — uma ave
+                em risco de extinção encontrada somente nessa região. E é lá
+                que, todos os anos, queimadas, mineração e desmatamento avançam
+                sobre uma floresta que o mundo ainda não aprendeu a valorizar.
+              </p>
+              <p>
+                A Dossel nasceu dessa contradição: uma floresta de valor
+                inestimável, sem nenhum instrumento econômico que incentive sua
+                preservação. O mercado de carbono é esse instrumento. E nós
+                somos a plataforma que traz ele para o produtor rural do
+                Nordeste.
+              </p>
+            </div>
+          </div>
+          <div class="araripe-box">
+            <div class="label">Chapada do Araripe · Ceará</div>
+            <h3 class="serif">
+              Uma floresta que resiste há milhões de anos. Precisa resistir por
+              mais.
+            </h3>
+            <p>
+              Reconhecida como Geoparque pela UNESCO em 2006, a Chapada do
+              Araripe é patrimônio geológico e biológico da humanidade — com
+              fósseis de dinossauros, aquíferos naturais e espécies endêmicas
+              ameaçadas.
+            </p>
+            <p>
+              Parte considerável da mata original já foi desmatada. O que resta
+              pode — e deve — gerar renda para quem a preserva.
+            </p>
+            <div class="araripe-stats">
+              <div class="astat">
+                <div class="num">348</div>
+                <div class="lbl">Fontes naturais de água na chapada</div>
+              </div>
+              <div class="astat">
+                <div class="num">290</div>
+                <div class="lbl">Espécies de aves catalogadas</div>
+              </div>
+              <div class="astat">
+                <div class="num">1946</div>
+                <div class="lbl">
+                  Ano da criação da Floresta Nacional do Araripe
+                </div>
+              </div>
+              <div class="astat">
+                <div class="num">UNESCO</div>
+                <div class="lbl">Geoparque reconhecido desde 2006</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSÃO E VALORES -->
+    <section class="missao">
+      <div class="container">
+        <div class="missao-head">
+          <div class="eyebrow">Nossos valores</div>
+          <h2 class="serif">O que nos guia todos os dias.</h2>
+        </div>
+        <div class="valores-grid">
+          <div class="valor">
+            <div class="icon">🌿</div>
+            <h3 class="serif">Floresta em pé tem valor</h3>
+            <p>
+              Acreditamos que preservar floresta precisa ser tão lucrativo
+              quanto derrubá-la. O mercado de carbono é o mecanismo que torna
+              isso possível — e a Dossel é a plataforma que democratiza esse
+              acesso.
+            </p>
+          </div>
+          <div class="valor">
+            <div class="icon">📊</div>
+            <h3 class="serif">Dados, não promessas</h3>
+            <p>
+              Todo crédito que emitimos é verificado por satélite, auditado por
+              terceiros e certificado pela Verra. Nenhum número parte do
+              produtor — tudo é rastreável por fontes públicas independentes do
+              governo federal.
+            </p>
+          </div>
+          <div class="valor">
+            <div class="icon">🤝</div>
+            <h3 class="serif">Sucesso compartilhado</h3>
+            <p>
+              A Dossel só ganha quando o produtor ganha. Nossa comissão de 15%
+              vem dos créditos emitidos — zero custo adiantado, zero risco para
+              quem tem a floresta. Se a floresta não gerar, nós não faturamos.
+            </p>
+          </div>
+          <div class="valor">
+            <div class="icon">🌵</div>
+            <h3 class="serif">O Nordeste no centro</h3>
+            <p>
+              Nascemos no interior do Ceará e escolhemos começar pela Caatinga —
+              o único grande bioma brasileiro sem nenhuma plataforma de carbono
+              dedicada. Não porque é fácil, mas porque é onde a diferença é
+              maior.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNDADOR -->
+    <section class="fundador">
+      <div class="container">
+        <div class="fundador-inner">
+          <div>
+            <div class="foto-box">
+              <div class="avatar">🌿</div>
+              <p>Foto em breve</p>
+            </div>
+          </div>
+          <div class="fundador-bio">
+            <div class="eyebrow">Time fundador</div>
+            <h2 class="serif">Lucas Reis</h2>
+            <div class="cargo">Fundador & CEO · Juazeiro do Norte, CE</div>
+            <p>
+              Desenvolvedor de software e estudante de Análise e Desenvolvimento
+              de Sistemas pela Anhanguera, Lucas cresceu em Juazeiro do Norte —
+              cidade do interior do Ceará às margens da Chapada do Araripe.
+            </p>
+            <p>
+              Com experiência em infraestrutura de TI, banco de dados e
+              logística operacional, construiu sozinho toda a plataforma digital
+              da Dossel — site, calculadora interativa, gerador automático de
+              COA e sistema de captação de leads.
+            </p>
+            <p>
+              A Dossel é sua resposta para uma pergunta que cresceu olhando para
+              a Chapada:
+              <strong
+                >por que uma floresta tão extraordinária não gera renda para
+                quem a preserva?</strong
+              >
+            </p>
+            <div class="fundador-links">
+              <a
+                href="https://www.linkedin.com/in/lucas-reis-619a1b168/"
+                class="flink"
+                target="_blank"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+                  />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+                LinkedIn
+              </a>
+              <a href="mailto:lucasreis2035@gmail.com" class="flink">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M3 8l9 6 9-6M3 8v10a1 1 0 001 1h16a1 1 0 001-1V8M3 8a1 1 0 011-1h16a1 1 0 011 1"
+                  />
+                </svg>
+                lucasreis2035@gmail.com
+              </a>
+              <a
+                href="https://wa.me/5588982261897"
+                class="flink"
+                target="_blank"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                  />
+                  <path
+                    d="M12 0C5.373 0 0 5.373 0 12c0 2.114.549 4.099 1.508 5.831L.057 23.97l6.255-1.491A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.947 0-3.769-.524-5.338-1.437l-.383-.226-3.971.946.996-3.858-.249-.396A9.932 9.932 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
+                  />
+                </svg>
+                (88) 98226-1897
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUNTE-SE -->
+    <section class="juntar">
+      <div class="container">
+        <div class="juntar-inner">
+          <div>
+            <div class="eyebrow">Faça parte</div>
+            <h2 class="serif">A Dossel está <em>crescendo.</em></h2>
+            <p>
+              Somos uma startup em estágio inicial, mas com uma visão clara: ser
+              a principal plataforma de carbono florestal do Brasil. Para isso,
+              precisamos de pessoas que acreditem que floresta em pé pode ser o
+              maior negócio do Nordeste.
+            </p>
+            <p>
+              Se você tem expertise em engenharia florestal, certificação
+              ambiental, agronomia ou mercado de carbono — queremos conversar.
+            </p>
+            <a href="https://wa.me/5588982261897" class="btn-primary"
+              >Entrar em contato →</a
+            >
+          </div>
+          <div class="vagas">
+            <div class="vaga">
+              <div class="vaga-info">
+                <h4>Engenheiro Florestal</h4>
+                <p>Visitas de campo · Laudos técnicos · MRV</p>
+              </div>
+              <span class="vaga-tag">Procurando</span>
+            </div>
+            <div class="vaga">
+              <div class="vaga-info">
+                <h4>Especialista em Certificação Verra</h4>
+                <p>REDD+ · VCS · Registro e auditoria</p>
+              </div>
+              <span class="vaga-tag">Procurando</span>
+            </div>
+            <div class="vaga">
+              <div class="vaga-info">
+                <h4>Analista Comercial</h4>
+                <p>Agronegócio nordestino · Captação de produtores</p>
+              </div>
+              <span class="vaga-tag">Procurando</span>
+            </div>
+            <div class="vaga">
+              <div class="vaga-info">
+                <h4>Co-fundador Técnico Ambiental</h4>
+                <p>Equity · Perfil florestal ou ambiental</p>
+              </div>
+              <span
+                class="vaga-tag"
+                style="background: rgba(196, 117, 26, 0.1); color: #8b4a0e"
+                >Prioritário</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-band">
+      <div class="container">
+        <h2 class="serif">
+          A floresta do Araripe resistiu milhões de anos.<br /><em
+            >Vamos garantir mais alguns.</em
+          >
+        </h2>
+        <p>
+          Calcule o potencial de carbono da sua propriedade e faça parte dessa
+          mudança.
+        </p>
+        <a href="index.html#calculadora" class="btn-light"
+          >Calcular meu potencial →</a
+        >
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="foot-grid">
+          <div>
+            <div class="foot-brand serif">Dossel</div>
+            <div class="foot-tagline">
+              A plataforma mais simples do Brasil para o produtor rural entrar
+              no mercado de carbono.
+            </div>
+          </div>
+          <div class="foot-col">
+            <h4>Produto</h4>
+            <ul>
+              <li><a href="index.html#calculadora">Calculadora</a></li>
+              <li><a href="como-funciona.html">Como funciona</a></li>
+              <li><a href="impacto.html">Impacto</a></li>
+              <li><a href="para-empresas.html">Para empresas</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Empresa</h4>
+            <ul>
+              <li><a href="sobre-nos.html">Sobre nós</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="#">Imprensa</a></li>
+              <li><a href="#">Carreiras</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Contato</h4>
+            <ul>
+              <li>
+                <a href="mailto:contato@dossel.com.br">contato@dossel.com.br</a>
+              </li>
+              <li><a href="https://wa.me/5588982261897">WhatsApp</a></li>
+              <li><a href="para-empresas.html">Para empresas</a></li>
+              <li><a href="#">Juazeiro do Norte · CE</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot-bar">
+          <div>
+            © 2026 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00
+          </div>
+          <div class="socials">
+            <a href="#">Instagram</a><a href="#">LinkedIn</a
+            ><a href="#">YouTube</a><a href="#">Privacidade</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function abrirMenu() {
+        document.getElementById("nav-links").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function fecharMenu() {
+        document.getElementById("nav-links").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    </script>
+  </body>
+</html>

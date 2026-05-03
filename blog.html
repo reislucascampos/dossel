@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Blog — Dossel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --forest: #043d30;
+        --forest-deep: #032821;
+        --moss: #1d9e75;
+        --moss-soft: #2fb488;
+        --paper: #f4efe6;
+        --paper-warm: #eae3d4;
+        --ink: #0a1f1a;
+        --ink-soft: #27443c;
+        --hair: rgba(4, 61, 48, 0.12);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "DM Sans", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: inherit;
+      }
+      .serif {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-weight: 400;
+        letter-spacing: -0.015em;
+        line-height: 1.02;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 24px;
+        }
+      }
+
+      /* NAV */
+      nav.top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 20px 0;
+        background: rgba(4, 61, 48, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(244, 239, 230, 0.08);
+      }
+      nav.top .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--paper);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        letter-spacing: -0.01em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 38px;
+        font-size: 14px;
+        color: rgba(244, 239, 230, 0.85);
+      }
+      .nav-links a:hover {
+        color: var(--paper);
+      }
+      .nav-links a.active {
+        color: var(--moss-soft);
+      }
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 20px;
+        border: 1px solid rgba(244, 239, 230, 0.3);
+        border-radius: 999px;
+        font-size: 13.5px;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .nav-cta:hover {
+        background: var(--paper);
+        color: var(--forest);
+      }
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* HERO */
+      .page-hero {
+        background: var(--forest);
+        color: var(--paper);
+        padding: 160px 0 100px;
+        position: relative;
+        overflow: hidden;
+      }
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(29, 158, 117, 0.15) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .page-hero .eyebrow {
+        color: var(--moss-soft);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .page-hero .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--moss);
+      }
+      .page-hero h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(40px, 5vw, 72px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        max-width: 18ch;
+        margin-bottom: 24px;
+      }
+      .page-hero h1 em {
+        font-style: italic;
+        color: var(--moss-soft);
+      }
+      .page-hero p {
+        font-size: 18px;
+        color: rgba(244, 239, 230, 0.75);
+        max-width: 50ch;
+        line-height: 1.6;
+      }
+
+      /* FILTROS */
+      .filtros {
+        padding: 48px 0 0;
+        border-bottom: 1px solid var(--hair);
+      }
+      .filtros-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding-bottom: 24px;
+      }
+      .filtro {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1px solid var(--hair);
+        font-size: 13px;
+        color: var(--ink-soft);
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #fff;
+      }
+      .filtro:hover {
+        border-color: var(--moss);
+        color: var(--moss);
+      }
+      .filtro.active {
+        background: var(--forest);
+        color: var(--paper);
+        border-color: var(--forest);
+      }
+
+      /* DESTAQUE */
+      .destaque {
+        padding: 80px 0 0;
+      }
+      .destaque-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        background: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow:
+          0 1px 0 var(--hair),
+          0 20px 40px -20px rgba(4, 61, 48, 0.1);
+        margin-bottom: 80px;
+      }
+      @media (max-width: 768px) {
+        .destaque-card {
+          grid-template-columns: 1fr;
+        }
+      }
+      .destaque-img {
+        background: var(--forest);
+        min-height: 360px;
+        position: relative;
+        overflow: hidden;
+      }
+      .destaque-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+      }
+      .destaque-img .badge {
+        position: absolute;
+        top: 24px;
+        left: 24px;
+        background: var(--moss);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 999px;
+      }
+      .destaque-body {
+        padding: 56px 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .destaque-body .meta {
+        font-size: 12.5px;
+        color: var(--ink-soft);
+        opacity: 0.6;
+        margin-bottom: 16px;
+      }
+      .destaque-body h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(24px, 3vw, 34px);
+        line-height: 1.1;
+        margin-bottom: 16px;
+        color: var(--forest);
+      }
+      .destaque-body p {
+        font-size: 15px;
+        color: var(--ink-soft);
+        line-height: 1.7;
+        margin-bottom: 32px;
+      }
+      .btn-ler {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--forest);
+        color: var(--paper);
+        padding: 14px 24px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+        width: fit-content;
+      }
+      .btn-ler:hover {
+        background: var(--forest-deep);
+        transform: translateY(-1px);
+      }
+
+      /* GRID DE POSTS */
+      .posts-section {
+        padding: 0 0 120px;
+      }
+      .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      @media (max-width: 900px) {
+        .posts-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .posts-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .post-card {
+        background: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        transition: transform 0.2s;
+        box-shadow: 0 1px 0 var(--hair);
+      }
+      .post-card:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          0 1px 0 var(--hair),
+          0 20px 40px -20px rgba(4, 61, 48, 0.12);
+      }
+      .post-thumb {
+        height: 180px;
+        background: var(--forest);
+        position: relative;
+        overflow: hidden;
+      }
+      .post-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.75;
+      }
+      .post-thumb .cat {
+        position: absolute;
+        bottom: 12px;
+        left: 16px;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: rgba(4, 61, 48, 0.8);
+        color: var(--paper);
+        padding: 4px 10px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
+      }
+      .post-body {
+        padding: 28px 28px 32px;
+      }
+      .post-body .meta {
+        font-size: 12px;
+        color: var(--ink-soft);
+        opacity: 0.55;
+        margin-bottom: 10px;
+      }
+      .post-body h3 {
+        font-family: "DM Serif Display", serif;
+        font-size: 19px;
+        line-height: 1.2;
+        margin-bottom: 10px;
+        color: var(--forest);
+      }
+      .post-body p {
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .post-body .ler {
+        font-size: 13px;
+        color: var(--moss);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .post-body .ler:hover {
+        color: var(--forest);
+      }
+
+      /* NEWSLETTER */
+      .newsletter {
+        background: var(--forest);
+        color: var(--paper);
+        padding: 96px 0;
+      }
+      .newsletter-inner {
+        max-width: 560px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .newsletter h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(28px, 3vw, 40px);
+        margin-bottom: 16px;
+        line-height: 1.1;
+      }
+      .newsletter p {
+        font-size: 16px;
+        color: rgba(244, 239, 230, 0.7);
+        margin-bottom: 36px;
+        line-height: 1.6;
+      }
+      .newsletter-form {
+        display: flex;
+        gap: 10px;
+      }
+      @media (max-width: 500px) {
+        .newsletter-form {
+          flex-direction: column;
+        }
+      }
+      .newsletter-form input {
+        flex: 1;
+        padding: 14px 20px;
+        background: rgba(244, 239, 230, 0.1);
+        border: 1px solid rgba(244, 239, 230, 0.2);
+        border-radius: 999px;
+        font-size: 14px;
+        color: var(--paper);
+        font-family: "DM Sans", sans-serif;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .newsletter-form input::placeholder {
+        color: rgba(244, 239, 230, 0.4);
+      }
+      .newsletter-form input:focus {
+        border-color: var(--moss);
+      }
+      .newsletter-form button {
+        padding: 14px 28px;
+        background: var(--moss);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
+        font-family: "DM Sans", sans-serif;
+      }
+      .newsletter-form button:hover {
+        background: var(--moss-soft);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--forest-deep);
+        color: var(--paper);
+        padding: 80px 0 0;
+      }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 60px;
+        margin-bottom: 60px;
+      }
+      @media (max-width: 860px) {
+        .foot-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+      }
+      .foot-brand {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+      .foot-tagline {
+        font-size: 14px;
+        color: rgba(244, 239, 230, 0.5);
+        line-height: 1.6;
+        max-width: 28ch;
+      }
+      .foot-col h4 {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(244, 239, 230, 0.4);
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+      .foot-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .foot-col ul a {
+        font-size: 14px;
+        color: rgba(244, 239, 230, 0.65);
+        transition: color 0.2s;
+      }
+      .foot-col ul a:hover {
+        color: var(--paper);
+      }
+      .foot-bar {
+        border-top: 1px solid rgba(244, 239, 230, 0.08);
+        padding: 24px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12.5px;
+        color: rgba(244, 239, 230, 0.35);
+      }
+      .socials {
+        display: flex;
+        gap: 24px;
+      }
+      .socials a {
+        color: rgba(244, 239, 230, 0.35);
+        font-size: 12.5px;
+        transition: color 0.2s;
+      }
+      .socials a:hover {
+        color: var(--paper);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="top">
+      <div class="container">
+        <div class="row">
+          <a href="index.html" class="brand">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle
+                cx="14"
+                cy="14"
+                r="13"
+                stroke="rgba(244,239,230,0.4)"
+                stroke-width="1"
+              />
+              <path
+                d="M14 22V10M10 14l4-4 4 4"
+                stroke="#2FB488"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Dossel
+          </a>
+          <div class="nav-links" id="nav-links">
+            <button
+              class="nav-close"
+              onclick="fecharMenu()"
+              aria-label="Fechar menu"
+            >
+              ×
+            </button>
+            <a href="index.html#calculadora">Calculadora</a>
+            <a href="como-funciona.html">Como funciona</a>
+            <a href="impacto.html">Impacto</a>
+            <a href="para-empresas.html">Para empresas</a>
+            <a href="blog.html" class="active">Blog</a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px">
+            <a href="https://wa.me/5588982261897" class="nav-cta">Entrar →</a>
+            <button
+              class="nav-hamburger"
+              onclick="abrirMenu()"
+              aria-label="Abrir menu"
+            >
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="eyebrow">Blog · Central de conhecimento</div>
+        <h1 class="serif">
+          Tudo sobre<br />mercado de carbono<br /><em
+            >para o produtor rural.</em
+          >
+        </h1>
+        <p>
+          Conteúdo prático sobre créditos de carbono, certificação Verra, biomas
+          brasileiros e como transformar floresta em renda.
+        </p>
+      </div>
+    </section>
+
+    <!-- FILTROS -->
+    <div class="filtros">
+      <div class="container">
+        <div class="filtros-row">
+          <button class="filtro active" onclick="filtrar(this, 'todos')">
+            Todos
+          </button>
+          <button class="filtro" onclick="filtrar(this, 'mercado')">
+            Mercado de carbono
+          </button>
+          <button class="filtro" onclick="filtrar(this, 'biomas')">
+            Biomas
+          </button>
+          <button class="filtro" onclick="filtrar(this, 'certificacao')">
+            Certificação Verra
+          </button>
+          <button class="filtro" onclick="filtrar(this, 'produtor')">
+            Para o produtor
+          </button>
+          <button class="filtro" onclick="filtrar(this, 'legislacao')">
+            Legislação
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST DESTAQUE -->
+    <div class="destaque">
+      <div class="container">
+        <div class="destaque-card">
+          <div
+            class="destaque-img"
+            style="
+              background: linear-gradient(135deg, #043d30 0%, #1d9e75 100%);
+            "
+          >
+            <div class="badge">Em destaque</div>
+          </div>
+          <div class="destaque-body">
+            <div>
+              <div class="meta">
+                Mercado de carbono · 15 de abril de 2026 · 8 min de leitura
+              </div>
+              <h2 class="serif">
+                O que mudou com a Lei do Mercado Brasileiro de Redução de
+                Emissões (MBRE)
+              </h2>
+              <p>
+                Em dezembro de 2024, o Brasil sancionou a Lei 15.042 — o marco
+                regulatório do mercado de carbono nacional. Entenda o que muda
+                para produtores rurais, empresas e como a Dossel se posiciona
+                nesse novo cenário.
+              </p>
+            </div>
+            <a href="#" class="btn-ler">Ler artigo completo →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID DE POSTS -->
+    <div class="posts-section">
+      <div class="container">
+        <div class="posts-grid" id="posts-grid">
+          <div class="post-card" data-cat="produtor">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #043d30, #2fb488)"
+            >
+              <span class="cat">Para o produtor</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">10 de abril de 2026 · 5 min</div>
+              <h3 class="serif">
+                O que é o CAR e por que ele é a chave para entrar no mercado de
+                carbono
+              </h3>
+              <p>
+                O Cadastro Ambiental Rural é o ponto de partida para qualquer
+                projeto de carbono no Brasil. Saiba como consultar o CAR da sua
+                propriedade.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="biomas">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #5c3a1e, #c4751a)"
+            >
+              <span class="cat">Biomas</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">5 de abril de 2026 · 6 min</div>
+              <h3 class="serif">
+                Caatinga: o bioma mais ignorado do mercado de carbono tem enorme
+                potencial
+              </h3>
+              <p>
+                Com 844 mil km² e cobertura exclusivamente brasileira, a
+                Caatinga é o único grande bioma sem plataforma de carbono
+                dedicada. Isso está mudando.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="certificacao">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #032821, #1d9e75)"
+            >
+              <span class="cat">Certificação Verra</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">28 de março de 2026 · 7 min</div>
+              <h3 class="serif">
+                O que é a certificação Verra VCS e por que ela vale mais do que
+                qualquer token
+              </h3>
+              <p>
+                Entenda por que o Verified Carbon Standard da Verra é o único
+                padrão aceito por grandes compradores corporativos e como ele
+                garante a qualidade dos créditos.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="mercado">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #043d30, #0f6e56)"
+            >
+              <span class="cat">Mercado de carbono</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">20 de março de 2026 · 9 min</div>
+              <h3 class="serif">
+                REDD+ vs ARR: qual tipo de projeto de carbono é certo para a sua
+                propriedade?
+              </h3>
+              <p>
+                Conservação de floresta existente ou plantio de floresta nova —
+                as duas abordagens têm metodologias, prazos e receitas
+                diferentes. Veja qual se encaixa no seu caso.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="legislacao">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #1a1a18, #27443c)"
+            >
+              <span class="cat">Legislação</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">12 de março de 2026 · 6 min</div>
+              <h3 class="serif">
+                SBCE 2026: o mercado regulado brasileiro que vai mudar tudo para
+                as empresas
+              </h3>
+              <p>
+                O Sistema Brasileiro de Comércio de Emissões entra em operação
+                em 2026. Saiba quais empresas serão obrigadas a compensar e como
+                isso aumenta a demanda por créditos florestais.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="produtor">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #043d30, #2fb488)"
+            >
+              <span class="cat">Para o produtor</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">5 de março de 2026 · 4 min</div>
+              <h3 class="serif">
+                Quanto carbono a Caatinga sequestra? Entenda os números por
+                hectare
+              </h3>
+              <p>
+                Os fatores de biomassa do IPCC AR6 para a Caatinga e como eles
+                se traduzem em créditos de carbono e renda anual para o produtor
+                rural nordestino.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="mercado">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #032821, #043d30)"
+            >
+              <span class="cat">Mercado de carbono</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">25 de fevereiro de 2026 · 8 min</div>
+              <h3 class="serif">
+                Como a Arbonics construiu uma nova economia florestal na Europa
+                — e o que o Brasil pode aprender
+              </h3>
+              <p>
+                A startup estoniana captou €7,3M e opera em 6 países com o mesmo
+                modelo que a Dossel traz para o Brasil. Análise do que funcionou
+                e como adaptamos para o contexto brasileiro.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="certificacao">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #0f6e56, #2fb488)"
+            >
+              <span class="cat">Certificação Verra</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">18 de fevereiro de 2026 · 10 min</div>
+              <h3 class="serif">
+                O que é o MRV e como o monitoramento por satélite garante a
+                qualidade dos créditos
+              </h3>
+              <p>
+                Monitoramento, Reporte e Verificação — o tripé que sustenta a
+                credibilidade de qualquer projeto de carbono florestal e como
+                INPE e MapBiomas fazem isso no Brasil.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+
+          <div class="post-card" data-cat="biomas">
+            <div
+              class="post-thumb"
+              style="background: linear-gradient(135deg, #1a4a1a, #2fb488)"
+            >
+              <span class="cat">Biomas</span>
+            </div>
+            <div class="post-body">
+              <div class="meta">10 de fevereiro de 2026 · 5 min</div>
+              <h3 class="serif">
+                Cerrado: o segundo bioma mais desmatado do Brasil e suas
+                oportunidades de carbono
+              </h3>
+              <p>
+                Com apenas 20% de vegetação nativa restante e alta pressão do
+                agronegócio, o Cerrado tem enorme potencial de adicionalidade
+                para projetos REDD+ e ARR.
+              </p>
+              <a href="#" class="ler">Ler mais →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter">
+      <div class="container">
+        <div class="newsletter-inner">
+          <div
+            class="eyebrow"
+            style="color: var(--moss-soft); margin-bottom: 16px"
+          >
+            Newsletter Dossel
+          </div>
+          <h2 class="serif">
+            Fique por dentro do mercado de carbono brasileiro.
+          </h2>
+          <p>
+            Uma vez por mês — novidades do mercado, legislação, oportunidades
+            para produtores e análises da equipe Dossel.
+          </p>
+          <div class="newsletter-form">
+            <input type="email" id="nl-email" placeholder="seu@email.com.br" />
+            <button onclick="assinarNewsletter()">Assinar grátis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="foot-grid">
+          <div>
+            <div class="foot-brand serif">Dossel</div>
+            <div class="foot-tagline">
+              A plataforma mais simples do Brasil para o produtor rural entrar
+              no mercado de carbono.
+            </div>
+          </div>
+          <div class="foot-col">
+            <h4>Produto</h4>
+            <ul>
+              <li><a href="index.html#calculadora">Calculadora</a></li>
+              <li><a href="como-funciona.html">Como funciona</a></li>
+              <li><a href="impacto.html">Impacto</a></li>
+              <li><a href="para-empresas.html">Para empresas</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Empresa</h4>
+            <ul>
+              <li><a href="#">Sobre nós</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="#">Imprensa</a></li>
+              <li><a href="#">Carreiras</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Contato</h4>
+            <ul>
+              <li>
+                <a href="mailto:contato@dossel.com.br">contato@dossel.com.br</a>
+              </li>
+              <li><a href="https://wa.me/5588982261897">WhatsApp</a></li>
+              <li><a href="para-empresas.html">Para empresas</a></li>
+              <li><a href="#">Nordeste · Brasil</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot-bar">
+          <div>
+            © 2026 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00
+          </div>
+          <div class="socials">
+            <a href="#">Instagram</a><a href="#">LinkedIn</a
+            ><a href="#">YouTube</a><a href="#">Privacidade</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function filtrar(btn, cat) {
+        document
+          .querySelectorAll(".filtro")
+          .forEach((f) => f.classList.remove("active"));
+        btn.classList.add("active");
+        document.querySelectorAll(".post-card").forEach((card) => {
+          if (cat === "todos" || card.dataset.cat === cat) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+
+      function assinarNewsletter() {
+        const email = document.getElementById("nl-email").value.trim();
+        if (!email) return;
+        const msg = encodeURIComponent(
+          `Olá! Quero assinar a newsletter da Dossel.\n\nE-mail: ${email}`,
+        );
+        window.open(`https://wa.me/5588982261897?text=${msg}`, "_blank");
+      }
+    </script>
+
+    <script>
+      function abrirMenu() {
+        document.getElementById("nav-links").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function fecharMenu() {
+        document.getElementById("nav-links").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    </script>
+  </body>
+</html>
