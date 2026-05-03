@@ -152,6 +152,62 @@
         .nav-links {
           display: none;
         }
+        .nav-links.open {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(4, 61, 48, 0.98);
+          backdrop-filter: blur(12px);
+          z-index: 200;
+          align-items: center;
+          justify-content: center;
+          gap: 32px;
+          font-size: 22px;
+        }
+        .nav-links.open a {
+          color: var(--paper);
+          font-size: 22px;
+        }
+        .nav-links.open .nav-close {
+          display: flex;
+          position: absolute;
+          top: 28px;
+          right: 24px;
+          font-size: 32px;
+          color: var(--paper);
+          cursor: pointer;
+          background: none;
+          border: none;
+          line-height: 1;
+        }
+      }
+      .nav-hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 6px;
+        background: none;
+        border: none;
+      }
+      .nav-hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--paper);
+        border-radius: 2px;
+      }
+      @media (max-width: 900px) {
+        .nav-hamburger {
+          display: flex;
+        }
+        .nav-cta {
+          display: none;
+        }
       }
 
       /* ─────────── HERO ─────────── */
@@ -901,17 +957,33 @@
           </svg>
           Dossel
         </a>
-        <div class="nav-links">
-          <a href="#calculadora">Calculadora</a>
+        <div class="nav-links" id="nav-links">
+          <button
+            class="nav-close"
+            onclick="fecharMenu()"
+            aria-label="Fechar menu"
+          >
+            ×
+          </button>
+          <a href="#calculadora" onclick="fecharMenu()">Calculadora</a>
           <a href="como-funciona.html">Como funciona</a>
           <a href="impacto.html">Impacto</a>
           <a href="para-empresas.html">Para empresas</a>
           <a href="blog.html">Blog</a>
           <a href="sobre-nos.html">Sobre nós</a>
         </div>
-        <a href="https://wa.me/5588982261897" class="nav-cta"
-          >Entrar <span aria-hidden="true">→</span></a
-        >
+        <div style="display: flex; align-items: center; gap: 12px">
+          <a href="https://wa.me/5588982261897" class="nav-cta"
+            >Entrar <span aria-hidden="true">→</span></a
+          >
+          <button
+            class="nav-hamburger"
+            onclick="abrirMenu()"
+            aria-label="Abrir menu"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
     </nav>
 
@@ -1840,6 +1912,15 @@
         );
         window.open(`https://wa.me/5588982261897?text=${msg}`, "_blank");
         fecharContato();
+      }
+
+      function abrirMenu() {
+        document.getElementById("nav-links").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function fecharMenu() {
+        document.getElementById("nav-links").classList.remove("open");
+        document.body.style.overflow = "";
       }
     </script>
   </body>
