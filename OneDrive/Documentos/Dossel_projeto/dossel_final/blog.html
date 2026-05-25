@@ -107,6 +107,29 @@
   .socials{display:flex;gap:24px}
   .socials a{color:rgba(244,239,230,.35);font-size:12.5px;transition:color .2s}
   .socials a:hover{color:var(--paper)}
+
+  /* ─── HAMBURGER MENU ─── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+  .nav-hamburger span{display:block;width:24px;height:2px;background:var(--paper);border-radius:2px}
+  .nav-close{display:none}
+  @media(max-width:900px){
+    .nav-hamburger{display:flex}
+    .nav-cta{display:none}
+    .nav-links.open{display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(4,61,48,0.98);backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;gap:32px}
+    .nav-links.open a{color:var(--paper);font-size:22px}
+    .nav-close{display:flex;position:absolute;top:28px;right:24px;font-size:32px;color:var(--paper);cursor:pointer;background:none;border:none;line-height:1}
+  }
+  /* ─── MOBILE PADDING ─── */
+  @media(max-width:768px){
+    .page-hero{padding-bottom:60px}
+    .destaque-body{padding:36px 32px}
+  }
+  @media(max-width:480px){
+    .foot-grid{grid-template-columns:1fr!important}
+    .foot-bar{flex-direction:column;align-items:flex-start;gap:12px}
+    .filtros-row{gap:6px}
+    .filtro{font-size:12px;padding:7px 14px}
+  }
 </style>
 </head>
 <body>

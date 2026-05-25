@@ -11,7 +11,7 @@
 # Rodar o servidor:
 # uvicorn car_integration:app --reload --port 8000
 # ============================================================
-
+ 
 import os
 import requests
 from fastapi import FastAPI, HTTPException
@@ -67,7 +67,7 @@ def consultar_car(numero_car: str):
                 "token": token,
                 "timeout": 300,
             },
-            timeout=60,
+            timeout=120,
         )
         data = response.json()
     except Exception as e:

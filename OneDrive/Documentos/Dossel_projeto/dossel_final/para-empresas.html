@@ -122,6 +122,36 @@
   .socials{display:flex;gap:24px}
   .socials a{color:rgba(244,239,230,.35);font-size:12.5px;transition:color .2s}
   .socials a:hover{color:var(--paper)}
+
+  /* ─── HAMBURGER MENU ─── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+  .nav-hamburger span{display:block;width:24px;height:2px;background:var(--paper);border-radius:2px}
+  .nav-close{display:none}
+  @media(max-width:900px){
+    .nav-hamburger{display:flex}
+    .nav-cta{display:none}
+    .nav-links.open{display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(4,61,48,0.98);backdrop-filter:blur(12px);z-index:200;align-items:center;justify-content:center;gap:32px}
+    .nav-links.open a{color:var(--paper);font-size:22px}
+    .nav-close{display:flex;position:absolute;top:28px;right:24px;font-size:32px;color:var(--paper);cursor:pointer;background:none;border:none;line-height:1}
+  }
+  /* ─── TABLE OVERFLOW ─── */
+  .comp-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  @media(max-width:600px){.comp-table{min-width:500px}}
+  /* ─── MOBILE PADDING ─── */
+  @media(max-width:768px){
+    section:not(.page-hero){padding-top:64px!important;padding-bottom:64px!important}
+    .page-hero{padding-bottom:60px}
+    .step-box{padding:28px 24px}
+    .vantagem{padding:28px 24px}
+    .contact-form{padding:32px 24px}
+    .setores-grid{grid-template-columns:1fr!important}
+  }
+  @media(max-width:480px){
+    .foot-grid{grid-template-columns:1fr!important}
+    .foot-bar{flex-direction:column;align-items:flex-start;gap:12px}
+    .steps-grid{grid-template-columns:1fr!important}
+    .vantagens-grid{gap:2px}
+  }
 </style>
 </head>
 <body>
@@ -134,14 +164,18 @@
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="rgba(244,239,230,0.4)" stroke-width="1"/><path d="M14 22V10M10 14l4-4 4 4" stroke="#2FB488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Dossel
       </a>
-      <nav class="nav-links">
+      <div class="nav-links" id="nav-links">
+        <button class="nav-close" onclick="fecharMenu()" aria-label="Fechar menu">×</button>
         <a href="index.html#calculadora">Calculadora</a>
         <a href="como-funciona.html">Como funciona</a>
         <a href="impacto.html">Impacto</a>
         <a href="para-empresas.html" class="active">Para empresas</a>
         <a href="blog.html">Blog</a>
-      </nav>
-      <a href="#contato" class="nav-cta">Falar com especialista →</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="#contato" class="nav-cta">Falar com especialista →</a>
+        <button class="nav-hamburger" onclick="abrirMenu()" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      </div>
     </div>
   </div>
 </nav>
@@ -321,6 +355,7 @@
         <p>Veja por que empresas escolhem a Dossel em vez de corretoras tradicionais ou plataformas com tokens próprios.</p>
       </div>
     </div>
+    <div class="comp-table-wrap">
     <table class="comp-table">
       <thead>
         <tr>
@@ -340,6 +375,7 @@
         <tr><td>Impacto local Brasil</td><td class="yes">Renda para produtor rural ✓</td><td class="no">Não mensurável</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 </section>
 

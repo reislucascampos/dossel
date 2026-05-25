@@ -156,8 +156,11 @@
           display: flex;
           flex-direction: column;
           position: fixed;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background: rgba(4,61,48,0.98);
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(4, 61, 48, 0.98);
           backdrop-filter: blur(12px);
           z-index: 200;
           align-items: center;
@@ -172,7 +175,8 @@
         .nav-links.open .nav-close {
           display: flex;
           position: absolute;
-          top: 28px; right: 24px;
+          top: 28px;
+          right: 24px;
           font-size: 32px;
           color: var(--paper);
           cursor: pointer;
@@ -198,8 +202,12 @@
         border-radius: 2px;
       }
       @media (max-width: 900px) {
-        .nav-hamburger { display: flex; }
-        .nav-cta { display: none; }
+        .nav-hamburger {
+          display: flex;
+        }
+        .nav-cta {
+          display: none;
+        }
       }
 
       /* ─────────── HERO ─────────── */
@@ -332,8 +340,12 @@
         border-bottom-color: var(--paper);
       }
       @media (max-width: 768px) {
-        .btn-ghost { display: none; }
-        .hero-cta-row { justify-content: center; }
+        .btn-ghost {
+          display: none;
+        }
+        .hero-cta-row {
+          justify-content: center;
+        }
       }
 
       .hero-meta {
@@ -936,6 +948,23 @@
         display: inline-block;
         transition: transform 0.2s;
       }
+
+      /* ─────────── MOBILE / TABLET ─────────── */
+      @media (max-width: 768px) {
+        .hero-photo { display: none; }
+        .hero { min-height: auto; padding-bottom: 80px; }
+        section { padding: 72px 0 !important; }
+        .bioma-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 480px) {
+        .calc-inputs { padding: 24px !important; }
+        .calc-result { padding: 24px !important; }
+        .foot-grid { grid-template-columns: 1fr !important; }
+        .foot-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+        #modal-overlay > div { padding: 28px 24px !important; }
+        .hero-cta-row { flex-direction: column; align-items: stretch; }
+        .btn-primary { justify-content: center; }
+      }
     </style>
   </head>
   <body>
@@ -943,14 +972,29 @@
     <nav class="top">
       <div class="container row">
         <a href="#" class="brand" aria-label="Dossel">
-          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M16 3C10 3 6 8 6 13.5c0 3.5 2 6 4 7-1.5.5-3 2-3 4.5 0 3 2.5 4 4.5 4h9c2 0 4.5-1 4.5-4 0-2.5-1.5-4-3-4.5 2-1 4-3.5 4-7C26 8 22 3 16 3Z" fill="#F4EFE6"/>
-            <path d="M16 12v17" stroke="#043D30" stroke-width="1.4"/>
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 32 32"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M16 3C10 3 6 8 6 13.5c0 3.5 2 6 4 7-1.5.5-3 2-3 4.5 0 3 2.5 4 4.5 4h9c2 0 4.5-1 4.5-4 0-2.5-1.5-4-3-4.5 2-1 4-3.5 4-7C26 8 22 3 16 3Z"
+              fill="#F4EFE6"
+            />
+            <path d="M16 12v17" stroke="#043D30" stroke-width="1.4" />
           </svg>
           Dossel
         </a>
         <div class="nav-links" id="nav-links">
-          <button class="nav-close" onclick="fecharMenu()" aria-label="Fechar menu">×</button>
+          <button
+            class="nav-close"
+            onclick="fecharMenu()"
+            aria-label="Fechar menu"
+          >
+            ×
+          </button>
           <a href="#calculadora" onclick="fecharMenu()">Calculadora</a>
           <a href="como-funciona.html">Como funciona</a>
           <a href="impacto.html">Impacto</a>
@@ -958,9 +1002,15 @@
           <a href="blog.html">Blog</a>
           <a href="sobre-nos.html">Sobre nós</a>
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <a href="https://wa.me/5588982261897" class="nav-cta">Entrar <span aria-hidden="true">→</span></a>
-          <button class="nav-hamburger" onclick="abrirMenu()" aria-label="Abrir menu">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <a href="https://wa.me/5588982261897" class="nav-cta"
+            >Entrar <span aria-hidden="true">→</span></a
+          >
+          <button
+            class="nav-hamburger"
+            onclick="abrirMenu()"
+            aria-label="Abrir menu"
+          >
             <span></span><span></span><span></span>
           </button>
         </div>
@@ -1035,23 +1085,67 @@
 
         <div class="calc">
           <div class="calc-inputs">
-
             <!-- Campo CAR -->
-            <div class="field" style="margin-bottom:28px">
-              <label style="margin-bottom:10px">
-                <span class="name">Número do CAR <span style="font-weight:400;color:var(--ink-soft);font-size:12px">(opcional — preencha para busca automática)</span></span>
+            <div class="field" style="margin-bottom: 28px">
+              <label style="margin-bottom: 10px">
+                <span class="name"
+                  >Número do CAR
+                  <span
+                    style="
+                      font-weight: 400;
+                      color: var(--ink-soft);
+                      font-size: 12px;
+                    "
+                    >(opcional — preencha para busca automática)</span
+                  ></span
+                >
               </label>
-              <div style="display:flex;gap:8px;align-items:stretch">
-                <input type="text" id="car-input" placeholder="Ex: CE-2304400-XXXXXXXXXXXXXXXXXX"
-                  style="flex:1;padding:12px 16px;border:1.5px solid var(--hair);border-radius:6px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff;outline:none;transition:border-color .2s"
-                  onfocus="this.style.borderColor='var(--moss)'" onblur="this.style.borderColor='var(--hair)'">
-                <button onclick="buscarCAR()" id="btn-car"
-                  style="padding:12px 20px;background:var(--forest);color:var(--paper);border:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .2s;font-family:'DM Sans',sans-serif"
-                  onmouseover="this.style.background='#032821'" onmouseout="this.style.background='var(--forest)'">
+              <div style="display: flex; gap: 8px; align-items: stretch">
+                <input
+                  type="text"
+                  id="car-input"
+                  placeholder="Ex: CE-2304400-XXXXXXXXXXXXXXXXXX"
+                  style="
+                    flex: 1;
+                    padding: 12px 16px;
+                    border: 1.5px solid var(--hair);
+                    border-radius: 6px;
+                    font-size: 14px;
+                    font-family: &quot;DM Sans&quot;, sans-serif;
+                    color: var(--ink);
+                    background: #fff;
+                    outline: none;
+                    transition: border-color 0.2s;
+                  "
+                  onfocus="this.style.borderColor = 'var(--moss)'"
+                  onblur="this.style.borderColor = 'var(--hair)'"
+                />
+                <button
+                  onclick="buscarCAR()"
+                  id="btn-car"
+                  style="
+                    padding: 12px 20px;
+                    background: var(--forest);
+                    color: var(--paper);
+                    border: none;
+                    border-radius: 6px;
+                    font-size: 13px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    transition: background 0.2s;
+                    font-family: &quot;DM Sans&quot;, sans-serif;
+                  "
+                  onmouseover="this.style.background = '#032821'"
+                  onmouseout="this.style.background = 'var(--forest)'"
+                >
                   Buscar propriedade
                 </button>
               </div>
-              <div id="car-status" style="font-size:12px;margin-top:8px;line-height:1.5"></div>
+              <div
+                id="car-status"
+                style="font-size: 12px; margin-top: 8px; line-height: 1.5"
+              ></div>
             </div>
 
             <!-- Seletor de modalidade -->
@@ -1914,84 +2008,100 @@
       }
 
       function abrirMenu() {
-        document.getElementById('nav-links').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.getElementById("nav-links").classList.add("open");
+        document.body.style.overflow = "hidden";
       }
       function fecharMenu() {
-        document.getElementById('nav-links').classList.remove('open');
-        document.body.style.overflow = '';
+        document.getElementById("nav-links").classList.remove("open");
+        document.body.style.overflow = "";
       }
 
       // ── Integração com CAR via Infosimples ──────────────────
       // Troque pela URL do seu backend no Railway após subir o servidor
-      const BACKEND_URL = "https://seu-backend.railway.app";
+      const BACKEND_URL = "https://dossel-production.up.railway.app";
 
       async function buscarCAR() {
-        const carInput  = document.getElementById('car-input');
-        const carStatus = document.getElementById('car-status');
-        const btnCar    = document.getElementById('btn-car');
+        const carInput = document.getElementById("car-input");
+        const carStatus = document.getElementById("car-status");
+        const btnCar = document.getElementById("btn-car");
         const numeroCar = carInput.value.trim();
 
         if (!numeroCar) {
-          carStatus.innerHTML = '<span style="color:#C4751A">⚠️ Por favor, informe o número do CAR.</span>';
+          carStatus.innerHTML =
+            '<span style="color:#C4751A">⚠️ Por favor, informe o número do CAR.</span>';
           return;
         }
 
-        btnCar.textContent = 'Buscando...';
+        btnCar.textContent = "Buscando...";
         btnCar.disabled = true;
-        carStatus.innerHTML = '<span style="color:var(--ink-soft)">⏳ Consultando o Cadastro Ambiental Rural...</span>';
+        carStatus.innerHTML =
+          '<span style="color:var(--ink-soft)">⏳ Consultando o Cadastro Ambiental Rural...</span>';
 
         try {
-          const response = await fetch(`${BACKEND_URL}/consultar-car/${encodeURIComponent(numeroCar)}`);
+          const response = await fetch(
+            `${BACKEND_URL}/consultar-car/${encodeURIComponent(numeroCar)}`,
+          );
           const data = await response.json();
 
-          if (!response.ok || data.status !== 'ok') {
-            throw new Error(data.detail || 'Propriedade não encontrada. Verifique o número do CAR.');
+          if (!response.ok || data.status !== "ok") {
+            throw new Error(
+              data.detail ||
+                "Propriedade não encontrada. Verifique o número do CAR.",
+            );
           }
 
           const prop = data.propriedade;
           const calc = data.calculo_dossel;
 
           // Preenche área
-          const hectInput = document.getElementById('hect');
+          const hectInput = document.getElementById("hect");
           if (hectInput) {
             hectInput.value = Math.round(prop.area_total_ha);
           }
 
           // Preenche % vegetação
-          const vegSlider = document.getElementById('veg');
+          const vegSlider = document.getElementById("veg");
           if (vegSlider) {
             vegSlider.value = Math.round(calc.pct_vegetacao);
-            document.getElementById('veg-val').textContent = Math.round(calc.pct_vegetacao) + '%';
+            document.getElementById("veg-val").textContent =
+              Math.round(calc.pct_vegetacao) + "%";
           }
 
           // Seleciona bioma correto
           const biomaMap = {
-            'Amazônia': 'amazonia', 'Cerrado': 'cerrado',
-            'Mata Atlântica': 'mata_atlantica', 'Caatinga': 'caatinga',
-            'Pantanal': 'pantanal', 'Pampa': 'pampa',
+            Amazônia: "amazonia",
+            Cerrado: "cerrado",
+            "Mata Atlântica": "mata_atlantica",
+            Caatinga: "caatinga",
+            Pantanal: "pantanal",
+            Pampa: "pampa",
           };
           const biomaKey = biomaMap[calc.bioma_usado];
           if (biomaKey) {
-            document.querySelectorAll('.bioma').forEach(b => b.classList.remove('active'));
-            const biomaBtn = document.querySelector(`.bioma[data-b="${biomaKey}"]`);
+            document
+              .querySelectorAll(".bioma")
+              .forEach((b) => b.classList.remove("active"));
+            const biomaBtn = document.querySelector(
+              `.bioma[data-b="${biomaKey}"]`,
+            );
             if (biomaBtn) {
-              biomaBtn.classList.add('active');
-              currentRate  = parseFloat(biomaBtn.dataset.rate);
-              currentRrate = parseFloat(biomaBtn.dataset.rrate || biomaBtn.dataset.rate);
-              currentName  = calc.bioma_usado;
+              biomaBtn.classList.add("active");
+              currentRate = parseFloat(biomaBtn.dataset.rate);
+              currentRrate = parseFloat(
+                biomaBtn.dataset.rrate || biomaBtn.dataset.rate,
+              );
+              currentName = calc.bioma_usado;
             }
           }
 
           // Atualiza calculadora
           update();
 
-          carStatus.innerHTML = `<span style="color:#0F6E56">✅ <strong>${prop.nome || 'Propriedade encontrada'}</strong> — ${prop.municipio}, ${prop.estado} · ${Number(prop.area_total_ha).toLocaleString('pt-BR')} ha · CAR ${prop.situacao_car}</span>`;
-
+          carStatus.innerHTML = `<span style="color:#0F6E56">✅ <strong>${prop.nome || "Propriedade encontrada"}</strong> — ${prop.municipio}, ${prop.estado} · ${Number(prop.area_total_ha).toLocaleString("pt-BR")} ha · CAR ${prop.situacao_car}</span>`;
         } catch (error) {
           carStatus.innerHTML = `<span style="color:#C4751A">❌ ${error.message}</span>`;
         } finally {
-          btnCar.textContent = 'Buscar propriedade';
+          btnCar.textContent = "Buscar propriedade";
           btnCar.disabled = false;
         }
       }
