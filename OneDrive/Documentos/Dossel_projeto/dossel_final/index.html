@@ -228,6 +228,8 @@
         min-height: 780px;
         padding: 160px 0 110px;
         isolation: isolate;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
       }
       .hero-leaf {
         position: absolute;
@@ -598,6 +600,8 @@
         justify-content: space-between;
         position: relative;
         overflow: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
       }
       .calc-result::before {
         content: "";
@@ -889,6 +893,8 @@
         padding: 100px 0 40px;
         position: relative;
         overflow: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
       }
       .foot-grid {
         display: grid;
@@ -1000,6 +1006,11 @@
         .foot-grid { grid-template-columns: 1fr !important; }
         .bioma-grid { grid-template-columns: repeat(2, 1fr); }
         .hero h1 { font-size: clamp(32px, 9vw, 48px); }
+        .field label { flex-wrap: wrap; gap: 4px; }
+        .result-label { flex-wrap: wrap; gap: 6px; }
+        .result-label .ln { display: none; }
+        .result-revenue .k { flex-wrap: wrap; }
+        .stats .inner { grid-template-columns: 1fr !important; }
       }
       @media (max-width: 380px) {
         .bioma-grid { grid-template-columns: 1fr !important; }
@@ -1125,6 +1136,7 @@
                   placeholder="Ex: CE-2304400-XXXXXXXXXXXXXXXXXX"
                   style="
                     flex: 1;
+                    min-width: 0;
                     padding: 12px 16px;
                     border: 1.5px solid var(--hair);
                     border-radius: 6px;
