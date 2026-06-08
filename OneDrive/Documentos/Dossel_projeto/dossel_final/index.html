@@ -993,6 +993,10 @@
         .bioma-grid { grid-template-columns: repeat(2, 1fr); }
         .hero h1 { font-size: clamp(32px, 9vw, 48px); }
       }
+      @media (max-width: 380px) {
+        .bioma-grid { grid-template-columns: 1fr !important; }
+        .calc-modo-grid { grid-template-columns: 1fr !important; }
+      }
     </style>
   </head>
   <body>
@@ -1169,7 +1173,7 @@
                 O que você tem na propriedade?
               </div>
               <div
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px"
+                class="calc-modo-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px"
               >
                 <button
                   id="modo-preservacao"
