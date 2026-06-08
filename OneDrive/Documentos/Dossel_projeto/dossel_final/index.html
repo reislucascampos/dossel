@@ -1061,7 +1061,7 @@
           <a href="#calculadora" class="btn-primary"
             >Simular meus créditos <span class="arrow">→</span></a
           >
-          <a href="#" class="btn-secondary" onclick="abrirContato();return false;">Cadastrar propriedade</a>
+          <a href="#" class="btn-secondary" onclick="abrirCadastro();return false;">Cadastrar propriedade</a>
         </div>
       </div>
 
@@ -2096,7 +2096,100 @@
         window.open(`https://wa.me/5588982261897?text=${msg}`, "_blank");
         fecharContato();
       }
+
+      // ── Cadastro de propriedade (Supabase) ──────────────────
+      const SUPABASE_URL = "https://ejxyfijhynpxyncqtpvy.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_1vDT3Dhesla7IRrcXOtOoA_SpYdf_k_";
+
+      function abrirCadastro() {
+        document.getElementById("modal-cadastro").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+      function fecharCadastro() {
+        document.getElementById("modal-cadastro").style.display = "none";
+        document.body.style.overflow = "";
+        document.getElementById("cadastro-form").reset();
+        document.getElementById("cadastro-status").innerHTML = "";
+      }
+
+      async function salvarLead(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btn-cadastro");
+        const status = document.getElementById("cadastro-status");
+        const nome = document.getElementById("c-nome").value.trim();
+        const telefone = document.getElementById("c-telefone").value.trim();
+        const estado = document.getElementById("c-estado").value;
+        const area_ha = parseInt(document.getElementById("c-area").value, 10) || null;
+
+        btn.textContent = "Enviando...";
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Prefer": "return=minimal",
+            },
+            body: JSON.stringify({ nome, telefone, estado, area_ha }),
+          });
+
+          if (!res.ok) throw new Error("Erro ao salvar.");
+
+          status.innerHTML = '<span style="color:#0F6E56">✅ Cadastro recebido! Entraremos em contato em breve.</span>';
+          btn.textContent = "Enviado!";
+          setTimeout(fecharCadastro, 2500);
+        } catch {
+          status.innerHTML = '<span style="color:#C4751A">❌ Erro ao enviar. Tente novamente.</span>';
+          btn.textContent = "Cadastrar";
+          btn.disabled = false;
+        }
+      }
     </script>
+
+    <!-- Modal Cadastro de Propriedade -->
+    <div id="modal-cadastro" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(4,61,48,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px">
+      <div style="background:#fff;border-radius:16px;padding:40px 36px;max-width:480px;width:100%;position:relative">
+        <button onclick="fecharCadastro()" style="position:absolute;top:16px;right:20px;font-size:24px;color:#888;cursor:pointer;background:none;border:none;line-height:1">×</button>
+        <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;color:var(--moss);margin-bottom:12px">Cadastro de propriedade</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--forest);margin-bottom:8px;line-height:1.15">Vamos calcular o potencial da sua propriedade</h3>
+        <p style="font-size:14px;color:var(--ink-soft);margin-bottom:28px">Nossa equipe entra em contato em até 24h com uma análise personalizada.</p>
+        <form id="cadastro-form" onsubmit="salvarLead(event)" style="display:flex;flex-direction:column;gap:16px">
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--ink);display:block;margin-bottom:6px">Nome completo *</label>
+            <input id="c-nome" type="text" required placeholder="João Silva" style="width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:8px;font-size:14px;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--moss)'" onblur="this.style.borderColor='var(--hair)'">
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--ink);display:block;margin-bottom:6px">WhatsApp</label>
+            <input id="c-telefone" type="tel" placeholder="(88) 99999-0000" style="width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:8px;font-size:14px;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--moss)'" onblur="this.style.borderColor='var(--hair)'">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label style="font-size:13px;font-weight:500;color:var(--ink);display:block;margin-bottom:6px">Estado</label>
+              <select id="c-estado" style="width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:8px;font-size:14px;outline:none;background:#fff;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--moss)'" onblur="this.style.borderColor='var(--hair)'">
+                <option value="">Selecione</option>
+                <option>AC</option><option>AL</option><option>AM</option><option>AP</option>
+                <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                <option>GO</option><option>MA</option><option>MG</option><option>MS</option>
+                <option>MT</option><option>PA</option><option>PB</option><option>PE</option>
+                <option>PI</option><option>PR</option><option>RJ</option><option>RN</option>
+                <option>RO</option><option>RR</option><option>RS</option><option>SC</option>
+                <option>SE</option><option>SP</option><option>TO</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:13px;font-weight:500;color:var(--ink);display:block;margin-bottom:6px">Área estimada (ha)</label>
+              <input id="c-area" type="number" min="1" placeholder="Ex: 500" style="width:100%;padding:12px 14px;border:1.5px solid var(--hair);border-radius:8px;font-size:14px;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--moss)'" onblur="this.style.borderColor='var(--hair)'">
+            </div>
+          </div>
+          <div id="cadastro-status" style="font-size:13px;min-height:20px"></div>
+          <button id="btn-cadastro" type="submit" style="padding:16px;background:var(--forest);color:var(--paper);border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='#032821'" onmouseout="this.style.background='var(--forest)'">Cadastrar propriedade</button>
+        </form>
+      </div>
+    </div>
+
     <script src="animations.js"></script>
 </body>
 </html>
