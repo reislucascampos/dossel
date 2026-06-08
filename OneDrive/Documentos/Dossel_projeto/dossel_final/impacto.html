@@ -46,6 +46,12 @@
         max-width: 100%;
         position: relative;
       }
+      #page-wrap {
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+      }
       a {
         color: inherit;
         text-decoration: none;
@@ -776,6 +782,7 @@
     </style>
   </head>
   <body>
+    <div id="page-wrap">
     <!-- NAV -->
     <nav class="top">
       <div class="container">
@@ -1132,7 +1139,12 @@
             © 2026 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00
           </div>
           <div class="socials">
-            <a href="https://www.instagram.com/dossel.co/" target="_blank" rel="noopener">Instagram</a>
+            <a
+              href="https://www.instagram.com/dossel.co/"
+              target="_blank"
+              rel="noopener"
+              >Instagram</a
+            >
             <a href="#">LinkedIn</a>
             <a href="#">YouTube</a>
             <a href="#">Privacidade</a>
@@ -1152,5 +1164,6 @@
       }
     </script>
     <script src="animations.js"></script>
+    </div><!-- /page-wrap -->
   </body>
 </html>

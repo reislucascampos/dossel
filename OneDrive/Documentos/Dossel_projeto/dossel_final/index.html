@@ -46,6 +46,12 @@
         max-width: 100%;
         position: relative;
       }
+      #page-wrap {
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+      }
       img {
         max-width: 100%;
         display: block;
@@ -1011,6 +1017,10 @@
         .result-label .ln { display: none; }
         .result-revenue .k { flex-wrap: wrap; }
         .stats .inner { grid-template-columns: 1fr !important; }
+        .car-row { flex-direction: column; }
+        .car-row input, .car-row button { width: 100%; min-width: 0; }
+        .calc-inputs, .calc-result { width: 100%; min-width: 0; }
+        .calc { width: 100%; min-width: 0; overflow: hidden; }
       }
       @media (max-width: 380px) {
         .bioma-grid { grid-template-columns: 1fr !important; }
@@ -1019,6 +1029,7 @@
     </style>
   </head>
   <body>
+    <div id="page-wrap">
     <nav class="top">
       <div class="container row">
         <a href="#" class="brand" aria-label="Dossel">
@@ -1129,7 +1140,7 @@
                   ></span
                 >
               </label>
-              <div style="display: flex; gap: 8px; align-items: stretch">
+              <div class="car-row" style="display: flex; gap: 8px; align-items: stretch">
                 <input
                   type="text"
                   id="car-input"
@@ -2213,5 +2224,6 @@
     </div>
 
     <script src="animations.js"></script>
+    </div><!-- /page-wrap -->
 </body>
 </html>
