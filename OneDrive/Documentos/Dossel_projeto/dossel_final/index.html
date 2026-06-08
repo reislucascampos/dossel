@@ -31,7 +31,10 @@
         margin: 0;
         padding: 0;
       }
-      html,
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
       body {
         background: var(--paper);
         color: var(--ink);
@@ -40,6 +43,8 @@
         font-size: 16px;
         line-height: 1.5;
         overflow-x: hidden;
+        max-width: 100%;
+        position: relative;
       }
       img {
         max-width: 100%;
@@ -921,12 +926,14 @@
       }
       .wordmark {
         font-family: "DM Serif Display", serif;
-        font-size: clamp(120px, 22vw, 320px);
+        font-size: clamp(64px, 22vw, 320px);
         line-height: 0.85;
         letter-spacing: -0.04em;
         color: var(--paper);
         margin: 0 0 40px;
         user-select: none;
+        max-width: 100%;
+        overflow: hidden;
       }
       .wordmark em {
         font-style: italic;
@@ -1025,8 +1032,6 @@
             <span></span><span></span><span></span>
           </button>
         </div>
-      </div>
-    </nav>
       </div>
     </nav>
 

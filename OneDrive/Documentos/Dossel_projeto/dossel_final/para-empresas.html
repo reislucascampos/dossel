@@ -31,7 +31,10 @@
         margin: 0;
         padding: 0;
       }
-      html,
+      html {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
       body {
         background: var(--paper);
         color: var(--ink);
@@ -39,7 +42,9 @@
         -webkit-font-smoothing: antialiased;
         font-size: 16px;
         line-height: 1.5;
-  overflow-x: hidden;
+        overflow-x: hidden;
+        max-width: 100%;
+        position: relative;
       }
       a {
         color: inherit;
