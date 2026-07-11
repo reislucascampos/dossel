@@ -1,125 +1,133 @@
 # ============================================================
-# DOSSEL — Integração com CAR via Infosimples
+# DOSSEL — Integração com CAR via SICAR/SFB (gratuito)
 # Arquivo: car_integration.py
-# ============================================================
-# Instalar dependências:
-# pip install fastapi uvicorn requests python-dotenv
 #
-# Criar arquivo .env com:
-# INFOSIMPLES_TOKEN=seu_token_aqui
+# Fonte: geoserver.car.gov.br — dados abertos do governo federal
+# Sem token, sem custo, sem dependência externa.
+#
+# Instalar dependências:
+# pip install fastapi uvicorn requests
 #
 # Rodar o servidor:
 # uvicorn car_integration:app --reload --port 8000
 # ============================================================
- 
-import os
+
 import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = FastAPI(title="Dossel CAR API")
 
-# Permitir requisições do site Dossel
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Em produção: coloque só o domínio do site
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ── Mapeamento de biomas da Dossel ───────────────────────────
+# ── Parâmetros de cálculo por bioma ─────────────────────────
 BIOMAS = {
-    "Amazônia":       { "co2": 180, "cresc": 4.5, "nome": "Amazônia" },
-    "Cerrado":        { "co2": 80,  "cresc": 2.8, "nome": "Cerrado" },
-    "Mata Atlântica": { "co2": 130, "cresc": 3.8, "nome": "Mata Atlântica" },
-    "Caatinga":       { "co2": 40,  "cresc": 1.8, "nome": "Caatinga" },
-    "Pantanal":       { "co2": 100, "cresc": 2.5, "nome": "Pantanal" },
-    "Pampa":          { "co2": 35,  "cresc": 1.5, "nome": "Pampa" },
+    "Amazônia":       {"co2": 180, "cresc": 4.5},
+    "Cerrado":        {"co2": 80,  "cresc": 2.8},
+    "Mata Atlântica": {"co2": 130, "cresc": 3.8},
+    "Caatinga":       {"co2": 40,  "cresc": 1.8},
+    "Pantanal":       {"co2": 100, "cresc": 2.5},
+    "Pampa":          {"co2": 35,  "cresc": 1.5},
 }
 
-PRECO_TCO2 = 50  # R$/tCO2 — preço médio mercado voluntário Verra
+PRECO_TCO2 = 82  # R$/tCO₂e — cotação média Safra 2026
+
+# ── Bioma predominante por UF ────────────────────────────────
+# Simplificação necessária: SICAR não retorna bioma diretamente.
+BIOMA_POR_UF = {
+    "AC": "Amazônia", "AM": "Amazônia", "PA": "Amazônia",
+    "RO": "Amazônia", "RR": "Amazônia", "AP": "Amazônia",
+    "CE": "Caatinga", "RN": "Caatinga", "PB": "Caatinga",
+    "PE": "Caatinga", "AL": "Caatinga", "SE": "Caatinga",
+    "PI": "Caatinga", "BA": "Caatinga",
+    "SP": "Mata Atlântica", "RJ": "Mata Atlântica",
+    "ES": "Mata Atlântica", "PR": "Mata Atlântica",
+    "SC": "Mata Atlântica",
+    "GO": "Cerrado", "DF": "Cerrado", "TO": "Cerrado",
+    "MT": "Cerrado", "MG": "Cerrado", "MA": "Cerrado",
+    "MS": "Pantanal",
+    "RS": "Pampa",
+}
+
+SICAR_WFS = "https://geoserver.car.gov.br/geoserver/sicar/wfs"
 
 
-# ── Endpoint principal: consulta o CAR e calcula potencial ───
+def _uf_do_car(numero_car: str) -> str:
+    return numero_car[:2].upper()
+
+
+def _layer_do_uf(uf: str) -> str:
+    return f"sicar:sicar_imoveis_{uf.lower()}"
+
+
+# ── Endpoint principal ───────────────────────────────────────
 @app.get("/consultar-car/{numero_car}")
 def consultar_car(numero_car: str):
     """
-    Recebe o número do CAR e retorna os dados da propriedade
-    + cálculo do potencial de carbono da Dossel.
-    
+    Consulta o SICAR (gratuito) e retorna dados da propriedade
+    + cálculo do potencial de carbono Dossel.
+
     Exemplo: GET /consultar-car/CE-2304400-XXXXXXXXXXXXXXXXXX
     """
+    uf    = _uf_do_car(numero_car)
+    layer = _layer_do_uf(uf)
 
-    token = os.getenv("INFOSIMPLES_TOKEN")
-    if not token:
-        raise HTTPException(status_code=500, detail="Token Infosimples não configurado.")
-
-    # ── 1. Chama a API Infosimples ────────────────────────────
+    # ── 1. Consulta o SICAR WFS ───────────────────────────────
     try:
-        response = requests.post(
-            "https://api.infosimples.com/api/v2/consultas/car/demonstrativo",
-            data={
-                "car": numero_car,
-                "token": token,
-                "timeout": 300,
+        resp = requests.get(
+            SICAR_WFS,
+            params={
+                "service":      "WFS",
+                "version":      "2.0.0",
+                "request":      "GetFeature",
+                "typeNames":    layer,
+                "outputFormat": "application/json",
+                "CQL_FILTER":   f"cod_imovel='{numero_car}'",
+                "count":        1,
             },
-            timeout=120,
+            timeout=30,
         )
-        data = response.json()
+        data = resp.json()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao consultar API: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao consultar SICAR: {str(e)}")
 
-    # ── 2. Verifica se a consulta foi bem sucedida ────────────
-    if data.get("code") != 200:
+    features = data.get("features", [])
+    if not features:
         raise HTTPException(
-            status_code=400,
-            detail=f"Propriedade não encontrada. Verifique o número do CAR. Código: {data.get('code')}"
+            status_code=404,
+            detail="Propriedade não encontrada no SICAR. Verifique o número do CAR."
         )
 
-    # ── 3. Extrai os dados da propriedade ─────────────────────
-    dados = data.get("data", [{}])[0] if data.get("data") else {}
+    # ── 2. Extrai campos disponíveis ──────────────────────────
+    props      = features[0].get("properties", {})
+    area_total = float(props.get("area", 0) or 0)
+    municipio  = props.get("municipio", "")
+    estado     = props.get("uf", uf)
+    situacao   = props.get("status_imovel", "")
+    condicao   = props.get("condicao", "")
 
-    area_total      = float(dados.get("area_total_ha", 0) or 0)
-    area_vegetacao  = float(dados.get("area_vegetacao_nativa_ha", 0) or 0)
-    area_app        = float(dados.get("area_app_ha", 0) or 0)
-    area_reserva    = float(dados.get("area_reserva_legal_ha", 0) or 0)
-    bioma           = dados.get("bioma", "Caatinga")
-    municipio       = dados.get("municipio", "")
-    estado          = dados.get("estado", "")
-    situacao        = dados.get("situacao", "")
-    nome_imovel     = dados.get("nome_imovel", "")
+    # ── 3. Determina bioma pelo estado ────────────────────────
+    bioma_dossel = BIOMA_POR_UF.get(estado, "Caatinga")
+    dados_bioma  = BIOMAS[bioma_dossel]
 
-    # ── 4. Normaliza o bioma para os dados da Dossel ──────────
-    bioma_dossel = "Caatinga"  # padrão
-    for b in BIOMAS:
-        if b.lower() in bioma.lower():
-            bioma_dossel = b
-            break
-
-    dados_bioma = BIOMAS[bioma_dossel]
+    # ── 4. Estima área elegível (30% conservador) ─────────────
+    # SICAR não fornece breakdown de vegetação/APP/RL na API WFS.
+    # Usamos 30% da área total como estimativa mínima conservadora.
+    area_elegivel = area_total * 0.30
+    pct_vegetacao = 30.0
 
     # ── 5. Calcula potencial de carbono ───────────────────────
-    # Usa vegetação nativa real do CAR
-    # Se não tiver, estima como APP + Reserva Legal
-    if area_vegetacao > 0:
-        area_elegivel = area_vegetacao
-    elif area_app + area_reserva > 0:
-        area_elegivel = area_app + area_reserva
-    else:
-        area_elegivel = area_total * 0.20  # estimativa mínima: 20%
-
-    pct_vegetacao   = (area_elegivel / area_total * 100) if area_total > 0 else 0
-    co2_anual       = area_elegivel * dados_bioma["co2"] * dados_bioma["cresc"] / 100
-    receita_bruta   = co2_anual * PRECO_TCO2
+    co2_anual        = area_elegivel * dados_bioma["co2"] * dados_bioma["cresc"] / 100
+    receita_bruta    = co2_anual * PRECO_TCO2
     receita_produtor = receita_bruta * 0.85
-    receita_dossel  = receita_bruta * 0.15
-    receita_10_anos = receita_produtor * 10
+    receita_dossel   = receita_bruta * 0.15
+    receita_10_anos  = receita_produtor * 10
 
-    # ── 6. Define classificação de potencial ──────────────────
     if co2_anual >= 500:
         potencial = "Alto"
     elif co2_anual >= 50:
@@ -127,74 +135,78 @@ def consultar_car(numero_car: str):
     else:
         potencial = "Baixo"
 
-    # ── 7. Retorna resposta completa ──────────────────────────
+    # ── 6. Retorna resposta ───────────────────────────────────
     return {
         "status": "ok",
         "propriedade": {
-            "numero_car":    numero_car,
-            "nome":          nome_imovel,
-            "municipio":     municipio,
-            "estado":        estado,
-            "bioma":         bioma,
-            "situacao_car":  situacao,
-            "area_total_ha": area_total,
-            "area_app_ha":   area_app,
-            "area_reserva_ha": area_reserva,
-            "area_vegetacao_ha": area_vegetacao,
+            "numero_car":       numero_car,
+            "municipio":        municipio,
+            "estado":           estado,
+            "bioma":            bioma_dossel,
+            "situacao_car":     situacao,
+            "condicao":         condicao,
+            "area_total_ha":    area_total,
+            "area_app_ha":      None,
+            "area_reserva_ha":  None,
+            "area_vegetacao_ha": None,
         },
         "calculo_dossel": {
-            "bioma_usado":         bioma_dossel,
-            "area_elegivel_ha":    round(area_elegivel, 2),
-            "pct_vegetacao":       round(pct_vegetacao, 1),
-            "co2_anual_tco2":      round(co2_anual, 2),
-            "preco_tco2_brl":      PRECO_TCO2,
-            "receita_bruta_ano":   round(receita_bruta, 2),
-            "receita_produtor_ano": round(receita_produtor, 2),
-            "receita_dossel_ano":  round(receita_dossel, 2),
+            "bioma_usado":             bioma_dossel,
+            "area_elegivel_ha":        round(area_elegivel, 2),
+            "pct_vegetacao":           pct_vegetacao,
+            "co2_anual_tco2":          round(co2_anual, 2),
+            "preco_tco2_brl":          PRECO_TCO2,
+            "receita_bruta_ano":       round(receita_bruta, 2),
+            "receita_produtor_ano":    round(receita_produtor, 2),
+            "receita_dossel_ano":      round(receita_dossel, 2),
             "receita_produtor_10anos": round(receita_10_anos, 2),
-            "potencial":           potencial,
+            "potencial":               potencial,
         },
-        "mensagem": f"Propriedade com {potencial.lower()} potencial de carbono. "
-                    f"{round(area_elegivel, 1)} ha elegíveis em {bioma_dossel} = "
-                    f"R$ {round(receita_produtor, 0):,.0f}/ano para o produtor."
+        "mensagem": (
+            f"Propriedade com {potencial.lower()} potencial de carbono. "
+            f"{round(area_elegivel, 1)} ha elegíveis estimados em {bioma_dossel} = "
+            f"R$ {round(receita_produtor, 0):,.0f}/ano para o produtor."
+        ),
+        "fonte": "SICAR/SFB — dados abertos do governo federal",
+        "nota": "Área elegível estimada em 30% da área total (conservador). "
+                "Análise detalhada disponível após cadastro.",
     }
 
 
-# ── Endpoint de teste sem gastar créditos ────────────────────
+# ── Endpoint de teste sem chamada externa ────────────────────
 @app.get("/teste")
 def teste():
-    """Retorna dados simulados para testar a integração sem gastar créditos."""
     return {
         "status": "ok",
         "propriedade": {
-            "numero_car":    "CE-2304400-TESTE000000000",
-            "nome":          "Fazenda Boa Esperança",
-            "municipio":     "Juazeiro do Norte",
-            "estado":        "Ceará",
-            "bioma":         "Caatinga",
-            "situacao_car":  "Ativo",
-            "area_total_ha": 200,
-            "area_app_ha":   20,
-            "area_reserva_ha": 40,
-            "area_vegetacao_ha": 80,
+            "numero_car":       "CE-2304400-TESTE000000000",
+            "municipio":        "Juazeiro do Norte",
+            "estado":           "CE",
+            "bioma":            "Caatinga",
+            "situacao_car":     "AT",
+            "condicao":         "Ativo",
+            "area_total_ha":    200,
+            "area_app_ha":      None,
+            "area_reserva_ha":  None,
+            "area_vegetacao_ha": None,
         },
         "calculo_dossel": {
-            "bioma_usado":         "Caatinga",
-            "area_elegivel_ha":    80,
-            "pct_vegetacao":       40.0,
-            "co2_anual_tco2":      57.6,
-            "preco_tco2_brl":      50,
-            "receita_bruta_ano":   2880,
-            "receita_produtor_ano": 2448,
-            "receita_dossel_ano":  432,
-            "receita_produtor_10anos": 24480,
-            "potencial":           "Médio",
+            "bioma_usado":             "Caatinga",
+            "area_elegivel_ha":        60,
+            "pct_vegetacao":           30.0,
+            "co2_anual_tco2":          43.2,
+            "preco_tco2_brl":          82,
+            "receita_bruta_ano":       3542,
+            "receita_produtor_ano":    3011,
+            "receita_dossel_ano":      531,
+            "receita_produtor_10anos": 30110,
+            "potencial":               "Médio",
         },
-        "mensagem": "Propriedade com médio potencial de carbono. 80 ha elegíveis em Caatinga = R$ 2.448/ano para o produtor."
+        "mensagem": "Propriedade com médio potencial de carbono. 60 ha elegíveis em Caatinga = R$ 3.011/ano para o produtor.",
+        "fonte": "SICAR/SFB — dados abertos do governo federal",
     }
 
 
-# ── Rodar localmente ──────────────────────────────────────────
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
