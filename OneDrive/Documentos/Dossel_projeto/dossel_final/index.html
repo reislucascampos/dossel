@@ -327,6 +327,22 @@
         align-items: center;
         flex-wrap: wrap;
       }
+      .hero-trust {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        font-size: 13px;
+        color: rgba(244, 239, 230, 0.52);
+        flex-wrap: wrap;
+      }
+      .hero-trust strong {
+        color: rgba(244, 239, 230, 0.78);
+        font-weight: 500;
+      }
+      .hero-trust .sep {
+        color: rgba(244, 239, 230, 0.22);
+      }
       .btn-primary {
         display: inline-flex;
         align-items: center;
@@ -380,7 +396,7 @@
         border-bottom-color: var(--paper);
       }
 
-      .hero-meta {
+      .hero .hero-meta {
         position: absolute;
         bottom: 48px;
         left: 0;
@@ -391,13 +407,14 @@
         color: rgba(244, 239, 230, 0.55);
         font-size: 12.5px;
         z-index: 2;
+        pointer-events: none;
       }
-      .hero-meta .col {
+      .hero .hero-meta .col {
         display: flex;
         flex-direction: column;
         gap: 4px;
       }
-      .hero-meta b {
+      .hero .hero-meta b {
         color: var(--paper);
         font-weight: 500;
         font-size: 13.5px;
@@ -1003,7 +1020,7 @@
         .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
         .foot-bar { flex-direction: column; gap: 12px; }
         #modal-overlay > div { padding: 28px 20px !important; }
-        .hero-meta { display: none; }
+        .hero .hero-meta { display: none; }
       }
       @media (max-width: 480px) {
         .container { padding: 0 16px; }
@@ -1093,6 +1110,13 @@
           <a href="#calculadora" class="btn-primary"
             >Simular meus créditos <span class="arrow">→</span></a
           >
+        </div>
+        <div class="hero-trust">
+          <strong>Sua terra continua sua.</strong>
+          <span class="sep">·</span>
+          <span>Sem cessão de direitos</span>
+          <span class="sep">·</span>
+          <span>Pagamento direto ao produtor</span>
         </div>
       </div>
 
@@ -1187,6 +1211,9 @@
                 id="car-status"
                 style="font-size: 12px; margin-top: 8px; line-height: 1.5"
               ></div>
+              <div style="font-size: 11.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.6;">
+                A busca cruza automaticamente com dados do <strong style="color: var(--ink); font-weight: 500;">INPE · MapBiomas · SiCAR</strong> para mapear a vegetação nativa da sua propriedade.
+              </div>
             </div>
 
             <!-- Seletor de modalidade -->
@@ -1681,7 +1708,7 @@
 
         <div class="foot-bar">
           <div>
-            © 2025 Dossel Mercado de Carbono Ltda. · CNPJ 00.000.000/0001-00
+            © 2026 Dossel Mercado de Carbono Ltda.
           </div>
           <div class="socials">
             <a href="https://www.instagram.com/dossel.co/" target="_blank" rel="noopener">Instagram</a>
@@ -2037,8 +2064,8 @@
       );
       update();
 
-      // ── Integração com CAR via Infosimples ──────────────────
-      const BACKEND_URL = "https://dossel-production.up.railway.app";
+      // ── Integração com CAR via SICAR (gratuito) ─────────────
+      const BACKEND_URL = "https://dossel.onrender.com";
 
       async function buscarCAR() {
         const carInput = document.getElementById("car-input");
