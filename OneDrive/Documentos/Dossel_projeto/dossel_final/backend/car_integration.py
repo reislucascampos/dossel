@@ -12,9 +12,13 @@
 # uvicorn car_integration:app --reload --port 8000
 # ============================================================
 
+import urllib3
 import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+# O servidor do governo usa TLS antigo — desabilita verificação SSL
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 app = FastAPI(title="Dossel CAR API")
 
@@ -91,6 +95,7 @@ def consultar_car(numero_car: str):
                 "count":        1,
             },
             timeout=30,
+            verify=False,
         )
         data = resp.json()
     except Exception as e:
