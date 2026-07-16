@@ -12,13 +12,27 @@
 # uvicorn car_integration:app --reload --port 8000
 # ============================================================
 
+import ssl
 import urllib3
 import requests
+from requests.adapters import HTTPAdapter
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-# O servidor do governo usa TLS antigo — desabilita verificação SSL
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# O servidor do SICAR usa TLS legado — adaptador permissivo necessário
+class SicarSSLAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        ctx.set_ciphers("ALL:@SECLEVEL=0")
+        kwargs["ssl_context"] = ctx
+        return super().init_poolmanager(*args, **kwargs)
+
+sicar_session = requests.Session()
+sicar_session.mount("https://", SicarSSLAdapter())
 
 app = FastAPI(title="Dossel CAR API")
 
@@ -83,7 +97,7 @@ def consultar_car(numero_car: str):
 
     # ── 1. Consulta o SICAR WFS ───────────────────────────────
     try:
-        resp = requests.get(
+        resp = sicar_session.get(
             SICAR_WFS,
             params={
                 "service":      "WFS",
@@ -95,7 +109,6 @@ def consultar_car(numero_car: str):
                 "count":        1,
             },
             timeout=30,
-            verify=False,
         )
         data = resp.json()
     except Exception as e:
