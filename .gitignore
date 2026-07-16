@@ -12,3 +12,6 @@ venv/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Backup do .git antigo (remover depois de confirmar que nao precisa)
+.git.old-backup/
