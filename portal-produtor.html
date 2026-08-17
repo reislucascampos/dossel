@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portal do produtor — Dossel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body>
+    <div id="auth-loading">Carregando…</div>
+
+    <div class="app-shell" id="app" style="display: none">
+      <aside class="sidebar">
+        <div class="brand">
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M16 3C10 3 6 8 6 13.5c0 3.5 2 6 4 7-1.5.5-3 2-3 4.5 0 3 2.5 4 4.5 4h9c2 0 4.5-1 4.5-4 0-2.5-1.5-4-3-4.5 2-1 4-3.5 4-7C26 8 22 3 16 3Z" fill="#F4EFE6"/>
+            <path d="M16 12v17" stroke="#043D30" stroke-width="1.4"/>
+          </svg>
+          Dossel
+        </div>
+
+        <div class="section-label">Área do produtor</div>
+        <nav>
+          <a href="#" class="active">Visão geral</a>
+          <a href="#">Minha propriedade</a>
+          <a href="#">Monitoramento</a>
+          <a href="#">Créditos</a>
+          <a href="#">Pagamentos</a>
+          <a href="#">Meu cadastro</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          Mercado de carbono para o produtor rural
+          <span class="muted-strong">Nordeste · Brasil</span>
+          <button class="logout" onclick="dosselLogout()">Sair da conta</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="eyebrow">Portal do produtor</div>
+          <div class="user-chip">
+            <span class="name" id="user-name">—</span>
+            <span class="avatar" id="user-avatar">—</span>
+          </div>
+        </div>
+
+        <h1 class="page-title serif" id="greeting">Bom dia</h1>
+        <p class="page-subtitle">
+          Acompanhe o andamento do seu projeto e o potencial de geração de créditos da sua propriedade.
+        </p>
+
+        <div class="stat-row">
+          <div class="card stat-card">
+            <div class="label">Área preservada</div>
+            <div class="value">100 ha</div>
+            <div class="sub">Floresta nativa mapeada</div>
+          </div>
+          <div class="card stat-card">
+            <div class="label">Créditos estimados/ano</div>
+            <div class="value">280 tCO₂e</div>
+            <div class="sub">Estimativa preliminar</div>
+          </div>
+          <div class="card stat-card">
+            <div class="label">Receita estimada/ano</div>
+            <div class="value">R$ 18.951</div>
+            <div class="sub">Repasse estimado ao produtor</div>
+          </div>
+          <div class="card stat-card">
+            <div class="label">Status do projeto</div>
+            <div class="value accent" style="font-size: 20px">Em validação</div>
+            <div class="sub">Próxima etapa: PDD</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h2>Etapas do projeto</h2>
+            <div class="card-sub">Fazenda São João · atualizado há 2 dias</div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot done"></div>
+                <div class="step-name">CAR validado</div>
+                <div class="step-status done">Concluído</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot done"></div>
+                <div class="step-name">Contrato assinado</div>
+                <div class="step-status done">Concluído</div>
+              </div>
+              <div class="timeline-item current">
+                <div class="timeline-dot current-dot"></div>
+                <div class="step-name">Elaboração do PDD</div>
+                <div class="step-status current">Em andamento</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="step-name">Validação VVB</div>
+                <div class="step-status pending">Pendente</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="step-name">Registro na Verra</div>
+                <div class="step-status pending">Pendente</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="step-name">Primeiros créditos emitidos</div>
+                <div class="step-status pending">Pendente</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Monitoramento via satélite</h2>
+            <div class="card-sub">Indicadores da sua propriedade nos últimos 12 meses</div>
+            <div class="sat-preview">
+              <span class="sat-badge">SENTINEL 2</span>
+              <svg viewBox="0 0 400 150" preserveAspectRatio="none">
+                <path d="M0 90 C60 60,120 110,180 70 S320 30,400 60" stroke="#0c5946" stroke-width="1.4" fill="none" opacity="0.35"/>
+                <path d="M0 40 C80 90,140 20,220 60 S360 90,400 40" stroke="#0c5946" stroke-width="1.4" fill="none" opacity="0.25"/>
+              </svg>
+            </div>
+            <div class="sat-stats">
+              <div>
+                <div class="value">0.72</div>
+                <div class="label">NDVI</div>
+              </div>
+              <div>
+                <div class="value">94%</div>
+                <div class="label">Cobertura vegetal</div>
+              </div>
+              <div>
+                <div class="value">38</div>
+                <div class="label">tCO₂/ha · Biomassa</div>
+              </div>
+            </div>
+            <div class="card-source">Fonte: Sentinel 2 + MapBiomas</div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="portal-auth.js"></script>
+    <script>
+      (async () => {
+        const result = await requireSession("produtor");
+        if (!result) return;
+
+        const { user, perfil } = result;
+        const nomeCompleto = perfil?.nome_completo || user.email;
+        const primeiroNome = nomeCompleto.split(" ")[0];
+
+        const hora = new Date().getHours();
+        const saudacao = hora < 12 ? "Bom dia" : hora < 18 ? "Boa tarde" : "Boa noite";
+        document.getElementById("greeting").textContent = `${saudacao}, ${primeiroNome}`;
+        document.getElementById("user-name").textContent = nomeCompleto;
+        document.getElementById("user-avatar").textContent = initials(nomeCompleto);
+
+        document.getElementById("auth-loading").style.display = "none";
+        document.getElementById("app").style.display = "flex";
+      })();
+    </script>
+  </body>
+</html>

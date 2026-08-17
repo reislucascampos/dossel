@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Painel interno — Dossel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body>
+    <div id="auth-loading">Carregando…</div>
+
+    <div class="app-shell" id="app" style="display: none">
+      <aside class="sidebar">
+        <div class="brand">
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M16 3C10 3 6 8 6 13.5c0 3.5 2 6 4 7-1.5.5-3 2-3 4.5 0 3 2.5 4 4.5 4h9c2 0 4.5-1 4.5-4 0-2.5-1.5-4-3-4.5 2-1 4-3.5 4-7C26 8 22 3 16 3Z" fill="#F4EFE6"/>
+            <path d="M16 12v17" stroke="#043D30" stroke-width="1.4"/>
+          </svg>
+          Dossel
+        </div>
+        <div class="brand-sub">
+          Painel interno
+          <strong>Equipe Dossel</strong>
+        </div>
+
+        <div class="section-label">Operações</div>
+        <nav>
+          <a href="#" class="active">Visão geral</a>
+          <a href="#">Propriedades</a>
+          <a href="#">Monitoramento</a>
+          <a href="#">Projetos Verra</a>
+          <a href="#">Pipeline de vendas</a>
+          <a href="#">Relatórios</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          Ambiente interno
+          <span class="muted-strong">Dados operacionais</span>
+          <button class="logout" onclick="dosselLogout()">Sair da conta</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="eyebrow">Painel interno</div>
+          <div class="user-chip">
+            <span class="name" id="user-name">—</span>
+            <span class="avatar" id="user-avatar">—</span>
+          </div>
+        </div>
+
+        <h1 class="page-title serif" style="margin-bottom: 24px">Visão geral</h1>
+
+        <div class="stat-row">
+          <div class="card stat-card">
+            <div class="label">Propriedades cadastradas</div>
+            <div class="value">7</div>
+            <div class="sub">Em acompanhamento</div>
+          </div>
+          <div class="card stat-card">
+            <div class="label">Área total monitorada</div>
+            <div class="value">680 ha</div>
+            <div class="sub">Dados consolidados</div>
+          </div>
+          <div class="card stat-card">
+            <div class="label">tCO₂ estimado/ano</div>
+            <div class="value">1.904</div>
+            <div class="sub">Potencial do portfólio</div>
+          </div>
+          <div class="card stat-card">
+            <div class="label">VCUs emitidos</div>
+            <div class="value">0</div>
+            <div class="sub">Primeira emissão pendente</div>
+          </div>
+        </div>
+
+        <div class="split-row">
+          <div class="split-card produtor">
+            <div class="split-top"><span>Receita dos produtores</span><span>85%</span></div>
+            <div class="split-value">R$ 80.920/ano</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 85%"></div></div>
+          </div>
+          <div class="split-card dossel">
+            <div class="split-top"><span>Comissão Dossel</span><span>15%</span></div>
+            <div class="split-value">R$ 14.280/ano</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 15%"></div></div>
+          </div>
+        </div>
+
+        <div class="alert">
+          <span>⚠</span>
+          <span><strong>Monitoramento pendente:</strong> 1 propriedade com monitoramento pendente — Fazenda São Pedro</span>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px; padding: 22px 24px 8px">
+          <h2>Propriedades</h2>
+          <div class="card-sub">Visão consolidada do portfólio monitorado</div>
+          <div style="overflow-x: auto; margin: 0 -24px">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Propriedade</th>
+                  <th>Última imagem satélite</th>
+                  <th>NDVI</th>
+                  <th>Cobertura</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Fazenda São João</td>
+                  <td>14 ago 2026</td>
+                  <td>0.72</td>
+                  <td>94%</td>
+                  <td><span class="pill ok">Normal</span></td>
+                </tr>
+                <tr>
+                  <td>Fazenda São Pedro</td>
+                  <td>02 ago 2026</td>
+                  <td>0.54</td>
+                  <td>82%</td>
+                  <td><span class="pill bad">Pendente</span></td>
+                </tr>
+                <tr>
+                  <td>Sítio Boa Vista</td>
+                  <td>12 ago 2026</td>
+                  <td>0.68</td>
+                  <td>91%</td>
+                  <td><span class="pill warn">Atenção</span></td>
+                </tr>
+                <tr>
+                  <td>Fazenda Rio Claro</td>
+                  <td>10 ago 2026</td>
+                  <td>0.76</td>
+                  <td>96%</td>
+                  <td><span class="pill ok">Normal</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="height: 22px"></div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom: 0">
+          <div class="card">
+            <h2>Indicadores de satélite</h2>
+            <div class="card-sub">Médias do portfólio</div>
+            <div class="sat-stats">
+              <div>
+                <div class="value">0.69</div>
+                <div class="label">NDVI médio</div>
+              </div>
+              <div>
+                <div class="value">90%</div>
+                <div class="label">Cobertura média</div>
+              </div>
+              <div>
+                <div class="value">36</div>
+                <div class="label">tCO₂/ha · Biomassa média</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Saúde do portfólio</h2>
+            <div class="card-sub">Distribuição atual por status</div>
+            <div class="legend">
+              <span class="pill ok">5 Normal</span>
+              <span class="pill warn">1 Atenção</span>
+              <span class="pill bad">1 Pendente</span>
+            </div>
+            <div class="health-bar">
+              <span class="ok-fill" style="width: 71.4%"></span>
+              <span class="warn-fill" style="width: 14.3%"></span>
+              <span class="bad-fill" style="width: 14.3%"></span>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="portal-auth.js"></script>
+    <script>
+      (async () => {
+        const result = await requireSession("equipe");
+        if (!result) return;
+
+        const { perfil } = result;
+        document.getElementById("user-name").textContent = perfil.nome_completo;
+        document.getElementById("user-avatar").textContent = initials(perfil.nome_completo);
+
+        document.getElementById("auth-loading").style.display = "none";
+        document.getElementById("app").style.display = "flex";
+      })();
+    </script>
+  </body>
+</html>
