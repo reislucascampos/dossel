@@ -163,7 +163,25 @@
         color: var(--forest);
         border-color: var(--paper);
       }
+      .nav-login {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: rgba(244, 239, 230, 0.85);
+        padding: 8px 4px;
+      }
+      .nav-login:hover {
+        color: var(--paper);
+      }
+      .nav-login-mobile {
+        display: none;
+      }
       @media (max-width: 900px) {
+        .nav-login {
+          display: none;
+        }
+        .nav-links.open .nav-login-mobile {
+          display: block;
+        }
         .nav-links {
           display: none;
         }
@@ -1064,8 +1082,10 @@
           <a href="para-empresas.html">Para empresas</a>
           <a href="blog.html">Blog</a>
           <a href="sobre-nos.html">Sobre nós</a>
+          <a href="login.html" class="nav-login-mobile">Área do produtor</a>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
+          <a href="login.html" class="nav-login">Área do produtor</a>
           <a href="https://wa.me/5588982261897" class="nav-cta">Falar com a equipe <span aria-hidden="true">→</span></a>
           <button class="nav-hamburger" onclick="abrirMenu()" aria-label="Abrir menu">
             <span></span><span></span><span></span>

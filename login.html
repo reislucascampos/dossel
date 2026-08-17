@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Entrar — Dossel</title>
+    <title>Entrar ou criar conta — Dossel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -113,6 +113,39 @@
         text-decoration: none;
       }
       .back:hover { color: var(--forest); }
+      .tabs {
+        display: flex;
+        background: var(--paper);
+        border-radius: 999px;
+        padding: 4px;
+        margin-bottom: 24px;
+      }
+      .tabs button {
+        flex: 1;
+        border: none;
+        background: none;
+        font: inherit;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--ink-mute);
+        padding: 9px 0;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .tabs button.active {
+        background: var(--forest);
+        color: #fff;
+      }
+      .field.signup-only { display: none; }
+      .msg {
+        margin-top: 14px;
+        font-size: 13px;
+        color: #157054;
+        background: rgba(29, 158, 117, 0.1);
+        border-radius: 8px;
+        padding: 10px 12px;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -124,19 +157,30 @@
         </svg>
         Dossel
       </div>
-      <h1>Entrar</h1>
-      <p class="sub">Acesse o portal do produtor ou o painel interno da equipe.</p>
+
+      <div class="tabs">
+        <button type="button" id="tab-entrar" class="active">Entrar</button>
+        <button type="button" id="tab-criar">Criar conta</button>
+      </div>
+
+      <h1 id="form-title">Entrar</h1>
+      <p class="sub" id="form-sub">Acesse o portal do produtor ou o painel interno da equipe.</p>
       <form id="login-form">
+        <div class="field signup-only">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" autocomplete="name" />
+        </div>
         <div class="field">
           <label for="email">E-mail</label>
           <input type="email" id="email" required autocomplete="email" />
         </div>
         <div class="field">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" required autocomplete="current-password" />
+          <label for="senha" id="senha-label">Senha</label>
+          <input type="password" id="senha" required autocomplete="current-password" minlength="6" />
         </div>
         <button type="submit" class="submit" id="submit-btn">Entrar</button>
         <div class="error" id="error-box"></div>
+        <div class="msg" id="msg-box"></div>
       </form>
       <a href="index.html" class="back">← Voltar para o site</a>
     </div>
@@ -146,17 +190,80 @@
     <script>
       const form = document.getElementById("login-form");
       const errorBox = document.getElementById("error-box");
+      const msgBox = document.getElementById("msg-box");
       const submitBtn = document.getElementById("submit-btn");
+      const tabEntrar = document.getElementById("tab-entrar");
+      const tabCriar = document.getElementById("tab-criar");
+      const nomeField = document.querySelector(".field.signup-only");
+      const nomeInput = document.getElementById("nome");
+
+      let modo = "entrar"; // "entrar" | "criar"
+
+      function setModo(novoModo) {
+        modo = novoModo;
+        errorBox.style.display = "none";
+        msgBox.style.display = "none";
+
+        const criando = modo === "criar";
+        tabEntrar.classList.toggle("active", !criando);
+        tabCriar.classList.toggle("active", criando);
+        nomeField.style.display = criando ? "block" : "none";
+        nomeInput.required = criando;
+        document.getElementById("form-title").textContent = criando ? "Criar conta" : "Entrar";
+        document.getElementById("form-sub").textContent = criando
+          ? "Crie sua conta para acompanhar o projeto da sua propriedade."
+          : "Acesse o portal do produtor ou o painel interno da equipe.";
+        document.getElementById("senha-label").textContent = criando ? "Crie uma senha" : "Senha";
+        document.getElementById("senha").autocomplete = criando ? "new-password" : "current-password";
+        submitBtn.textContent = criando ? "Criar conta" : "Entrar";
+      }
+
+      tabEntrar.addEventListener("click", () => setModo("entrar"));
+      tabCriar.addEventListener("click", () => setModo("criar"));
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         errorBox.style.display = "none";
+        msgBox.style.display = "none";
         submitBtn.disabled = true;
-        submitBtn.textContent = "Entrando…";
 
         const email = document.getElementById("email").value.trim();
         const senha = document.getElementById("senha").value;
 
+        if (modo === "criar") {
+          submitBtn.textContent = "Criando conta…";
+          const nome = nomeInput.value.trim();
+
+          const { data, error } = await dosselSupabase.auth.signUp({
+            email,
+            password: senha,
+            options: { data: { nome_completo: nome } },
+          });
+
+          if (error) {
+            errorBox.textContent =
+              error.message.includes("already registered") || error.message.includes("already exists")
+                ? "Esse e-mail já tem conta. Tente entrar."
+                : "Não foi possível criar a conta. Confira os dados e tente de novo.";
+            errorBox.style.display = "block";
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Criar conta";
+            return;
+          }
+
+          if (!data.session) {
+            msgBox.textContent = "Conta criada! Confira seu e-mail para confirmar o cadastro antes de entrar.";
+            msgBox.style.display = "block";
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Criar conta";
+            return;
+          }
+
+          window.location.href = "portal-produtor.html";
+          return;
+        }
+
+        submitBtn.textContent = "Entrando…";
         const { error } = await dosselSupabase.auth.signInWithPassword({
           email,
           password: senha,
